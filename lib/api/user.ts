@@ -28,6 +28,7 @@ export async function getAllUsers(): Promise<ResultProps[]> {
   return await collection
     .aggregate([
       {
+        //sort by follower count
         $sort: {
           followers: -1,
         },
@@ -52,6 +53,12 @@ export async function getAllUsers(): Promise<ResultProps[]> {
           count: { $sum: 1 },
         },
       },
+      {
+        //sort alphabetically
+        $sort: {
+          _id: 1,
+        },
+      },
     ])
     .toArray();
 }
@@ -64,9 +71,36 @@ export async function searchUser(query: string) {
       {
         $search: {
           index: "users-index",
-          autocomplete: {
-            query,
-            path: "name",
+          compound: {
+            should: [
+              {
+                autocomplete: {
+                  query,
+                  path: "name",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+              {
+                autocomplete: {
+                  query,
+                  path: "username",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+              {
+                autocomplete: {
+                  query,
+                  path: "email",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+            ],
           },
         },
       },
@@ -91,6 +125,11 @@ export async function searchUser(query: string) {
             },
           },
           count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
         },
       },
     ])

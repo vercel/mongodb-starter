@@ -11,13 +11,17 @@ import {
   ViewGridAddIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import Directory from "./directory";
+import { ResultProps } from "@/lib/api/user";
 
 export default function Sidebar({
   sidebarOpen,
   setSidebarOpen,
+  results,
 }: {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
+  results: ResultProps[];
 }) {
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -69,83 +73,7 @@ export default function Sidebar({
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                <div className="flex-shrink-0 flex items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-pink-500-mark-gray-900-text.svg"
-                    alt="Workflow"
-                  />
-                </div>
-                <nav aria-label="Sidebar" className="mt-5">
-                  <div className="px-2 space-y-1">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={`${
-                          item.current
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                        }
-                          group flex items-center px-2 py-2 text-base font-medium rounded-md`}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        <item.icon
-                          className={`${
-                            item.current
-                              ? "text-gray-500"
-                              : "text-gray-400 group-hover:text-gray-500"
-                          }
-                            mr-4 h-6 w-6`}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                  <hr
-                    className="border-t border-gray-200 my-5"
-                    aria-hidden="true"
-                  />
-                  <div className="px-2 space-y-1">
-                    {secondaryNavigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                      >
-                        <item.icon
-                          className="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6"
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </nav>
-              </div>
-              <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                <a href="#" className="flex-shrink-0 group block">
-                  <div className="flex items-center">
-                    <div>
-                      <img
-                        className="inline-block h-10 w-10 rounded-full"
-                        src={user.imageUrl}
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                        {user.name}
-                      </p>
-                      <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                        View profile
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </div>
+              <Directory results={results} />
             </Dialog.Panel>
           </Transition.Child>
           <div className="flex-shrink-0 w-14" aria-hidden="true">
