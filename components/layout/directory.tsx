@@ -1,4 +1,3 @@
-import { FilterIcon, SearchIcon } from '@heroicons/react/solid';
 import { ResultProps } from '@/lib/api/user';
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -7,7 +6,7 @@ import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
 import { Check } from '@/components/icons';
 import BlurImage from '../blur-image';
-import DirectoryIcon from '../icons/directory';
+import { DirectoryIcon, SearchIcon } from '@/components/icons';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
   const [query, setQuery] = useState('');
@@ -22,7 +21,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
   );
 
   return (
-    <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-gray-200">
+    <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-[#333333]">
       <div className="px-6 pt-6 pb-0 sticky top-0 bg-black z-20">
         <Link href="/">
           <a>
@@ -42,10 +41,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
             </label>
             <div className="relative shadow-sm border-0 border-b-dark-accent-2 rounded-none border-b-[1px] ">
               <div className="absolute bg-black inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon
-                  className="h-4 w-4 text-dark-accent-3"
-                  aria-hidden="true"
-                />
+                <SearchIcon className="h-4 w-4 text-dark-accent-3" />
               </div>
               <input
                 type="search"

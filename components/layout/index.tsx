@@ -1,12 +1,12 @@
-import { useState, ReactNode } from "react";
-import Sidebar from "./sidebar";
-import Navbar from "./navbar";
-import Directory from "./directory";
-import { ResultProps } from "@/lib/api/user";
+import { useState, ReactNode } from 'react';
+import Sidebar from './sidebar';
+import Navbar from './navbar';
+import Directory from './directory';
+import { ResultProps } from '@/lib/api/user';
 
 export default function Layout({
   results,
-  children,
+  children
 }: {
   results: ResultProps[];
   children: ReactNode;
@@ -14,7 +14,7 @@ export default function Layout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-screen-2xl mx-auto h-full flex overflow-hidden">
+    <div className="w-full max-w-screen-2xl mx-auto h-full flex overflow-hidden bg-black">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
