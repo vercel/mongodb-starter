@@ -61,7 +61,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         {data && data.length > 0 ? (
           data.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">
-              <div className="z-10 sticky top-0 bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
+              <div className="bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
                 <h3>{letter}</h3>
               </div>
               <ul role="list" className="relative z-0">
@@ -69,8 +69,8 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                   <li key={user.username}>
                     <Link href={`/${user.username}`}>
                       <a>
-                        <div className="relative px-6 py-5 flex items-center space-x-3 focus-within:ring-0">
-                          <div className="flex-shrink-0 h-16 w-16 rounded-full overflow-hidden">
+                        <div className="relative px-6 py-4 flex items-center space-x-3 focus-within:ring-0">
+                          <div className="flex-shrink-0 h-12 w-12 rounded-full overflow-hidden">
                             <BlurImage
                               src={user.image}
                               alt={user.name}
