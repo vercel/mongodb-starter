@@ -7,13 +7,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      const { query } = req.query;
-      if (!query) {
-        res.status(400).send("Please provide a search query.");
-      } else {
-        const result = await getAllUsers(query as string);
-        return res.status(200).json(result);
-      }
+      const result = await getAllUsers(req.query.query as string);
+      return res.status(200).json(result);
     } catch (e: any) {
       console.log(e);
       return res.status(500).json({
