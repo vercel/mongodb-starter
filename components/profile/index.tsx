@@ -1,13 +1,17 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
-import { MailIcon, PhoneIcon } from '@heroicons/react/solid';
+import { PhoneIcon } from '@heroicons/react/solid';
 import { Check, MessageSquare } from '@/components/icons';
+import { useSession } from 'next-auth/react';
+import BlurImage from '../blur-image';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Profile({ user }: { user: UserProps }) {
+  const { data: session } = useSession();
+
   return (
     <article>
       <div>
@@ -19,11 +23,12 @@ export default function Profile({ user }: { user: UserProps }) {
         />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
-            <div className="flex">
-              <img
-                className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
+            <div className="h-24 w-24 rounded-full overflow-hidden ring-4 ring-white sm:h-32 sm:w-32">
+              <BlurImage
                 src={user.image}
-                alt=""
+                alt={user.name}
+                width={300}
+                height={300}
               />
             </div>
             <div className="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">

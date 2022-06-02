@@ -5,7 +5,8 @@ const nextConfig = {
     domains: [
       'avatars.githubusercontent.com',
       'avatar.tobi.sh',
-      'cloudflare-ipfs.com'
+      'cloudflare-ipfs.com',
+      'loremflickr.com'
     ]
   }
 };

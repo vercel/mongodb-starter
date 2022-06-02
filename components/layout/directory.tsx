@@ -6,6 +6,7 @@ import fetcher from '@/lib/fetcher';
 import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
 import { Check } from '@/components/icons';
+import BlurImage from '../blur-image';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
   const [query, setQuery] = useState('');
@@ -67,11 +68,12 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                     <Link href={`/${user.username}`}>
                       <a>
                         <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-0">
-                          <div className="flex-shrink-0">
-                            <img
-                              className="h-10 w-10 rounded-full"
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden">
+                            <BlurImage
                               src={user.image}
-                              alt=""
+                              alt={user.name}
+                              width={300}
+                              height={300}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
