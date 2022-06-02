@@ -54,45 +54,51 @@ export default function Directory({ results }: { results: ResultProps[] }) {
       </div>
       {/* Directory list */}
       <nav className="flex-1 min-h-0 overflow-y-auto" aria-label="Directory">
-        {data?.map(({ _id: letter, users }) => (
-          <div key={letter} className="relative">
-            <div className="z-10 sticky top-0 border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500 uppercase">
-              <h3>{letter}</h3>
+        {data && data.length > 0 ? (
+          data.map(({ _id: letter, users }) => (
+            <div key={letter} className="relative">
+              <div className="z-10 sticky top-0 border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500 uppercase">
+                <h3>{letter}</h3>
+              </div>
+              <ul role="list" className="relative z-0 divide-y divide-gray-200">
+                {users.map((user) => (
+                  <li key={user.username}>
+                    <Link href={`/${user.username}`}>
+                      <a>
+                        <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-0">
+                          <div className="flex-shrink-0">
+                            <img
+                              className="h-10 w-10 rounded-full"
+                              src={user.image}
+                              alt=""
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            {/* Extend touch target to entire panel */}
+                            <span
+                              className="absolute inset-0"
+                              aria-hidden="true"
+                            />
+                            <p className="text-sm font-medium text-gray-900">
+                              {user.name}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate">
+                              {user.email}
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul role="list" className="relative z-0 divide-y divide-gray-200">
-              {users.map((user) => (
-                <li key={user.username}>
-                  <Link href={`/${user.username}`}>
-                    <a>
-                      <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-0">
-                        <div className="flex-shrink-0">
-                          <img
-                            className="h-10 w-10 rounded-full"
-                            src={user.image}
-                            alt=""
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          {/* Extend touch target to entire panel */}
-                          <span
-                            className="absolute inset-0"
-                            aria-hidden="true"
-                          />
-                          <p className="text-sm font-medium text-gray-900">
-                            {user.name}
-                          </p>
-                          <p className="text-sm text-gray-500 truncate">
-                            {user.email}
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          ))
+        ) : (
+          <div className="px-6 py-6">
+            <p className="text-center text-gray-500">No results found</p>
           </div>
-        ))}
+        )}
       </nav>
     </aside>
   );
