@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import {
   CalendarIcon,
   CogIcon,
@@ -9,15 +9,15 @@ import {
   SpeakerphoneIcon,
   UserGroupIcon,
   ViewGridAddIcon,
-  XIcon,
-} from "@heroicons/react/outline";
-import Directory from "./directory";
-import { ResultProps } from "@/lib/api/user";
+  XIcon
+} from '@heroicons/react/outline';
+import Directory from './directory';
+import { ResultProps } from '@/lib/api/user';
 
 export default function Sidebar({
   sidebarOpen,
   setSidebarOpen,
-  results,
+  results
 }: {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -27,7 +27,7 @@ export default function Sidebar({
     <Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-40 lg:hidden"
+        className="relative z-40 bg-black lg:hidden"
         onClose={setSidebarOpen}
       >
         <Transition.Child
@@ -86,20 +86,20 @@ export default function Sidebar({
 }
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Teams", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Directory", href: "#", icon: SearchCircleIcon, current: true },
-  { name: "Announcements", href: "#", icon: SpeakerphoneIcon, current: false },
-  { name: "Office Map", href: "#", icon: MapIcon, current: false },
+  { name: 'Dashboard', href: '#', icon: HomeIcon, current: false },
+  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Teams', href: '#', icon: UserGroupIcon, current: false },
+  { name: 'Directory', href: '#', icon: SearchCircleIcon, current: true },
+  { name: 'Announcements', href: '#', icon: SpeakerphoneIcon, current: false },
+  { name: 'Office Map', href: '#', icon: MapIcon, current: false }
 ];
 const secondaryNavigation = [
-  { name: "Apps", href: "#", icon: ViewGridAddIcon },
-  { name: "Settings", href: "#", icon: CogIcon },
+  { name: 'Apps', href: '#', icon: ViewGridAddIcon },
+  { name: 'Settings', href: '#', icon: CogIcon }
 ];
 
 const user = {
-  name: "Tom Cook",
+  name: 'Tom Cook',
   imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
 };
