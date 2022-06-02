@@ -1,11 +1,11 @@
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useState } from "react";
-import { LoadingDots } from "@/components/icons";
-import BlurImage from "../blur-image";
-import { MenuIcon } from "@heroicons/react/outline";
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { useState } from 'react';
+import { LoadingDots } from '@/components/icons';
+import BlurImage from '../blur-image';
+import { MenuIcon } from '@heroicons/react/outline';
 
 export default function Navbar({
-  setSidebarOpen,
+  setSidebarOpen
 }: {
   setSidebarOpen: (open: boolean) => void;
 }) {
@@ -24,7 +24,7 @@ export default function Navbar({
         <span className="sr-only">Open sidebar</span>
         <MenuIcon className="h-6 w-6" aria-hidden="true" />
       </button>
-      {status !== "loading" &&
+      {status !== 'loading' &&
         (session?.user ? (
           <button
             className="w-8 h-8 rounded-full overflow-hidden"
@@ -35,7 +35,7 @@ export default function Navbar({
                 session.user.image ||
                 `https://avatar.tobi.sh/${session.user.name}`
               }
-              alt={session.user.name || "User"}
+              alt={session.user.name || 'User'}
               width={300}
               height={300}
             />
@@ -45,15 +45,15 @@ export default function Navbar({
             disabled={loading}
             onClick={() => {
               setLoading(true);
-              signIn("github");
+              signIn('github');
             }}
             className={`${
               loading
-                ? "bg-gray-200 border-gray-300"
-                : "bg-black hover:bg-white border-black"
-            } w-16 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
+                ? 'bg-gray-200 border-gray-300'
+                : 'bg-white hover:bg-black border-white'
+            } w-16 h-8 py-1 text-black hover:text-white border rounded-md text-sm transition-all`}
           >
-            {loading ? <LoadingDots color="gray" /> : "Log In"}
+            {loading ? <LoadingDots color="gray" /> : 'Log In'}
           </button>
         ))}
     </nav>
