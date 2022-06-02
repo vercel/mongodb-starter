@@ -36,7 +36,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
                   should: [
                     {
                       autocomplete: {
-                        search,
+                        query: search,
                         path: "name",
                         fuzzy: {
                           maxExpansions: 100,
@@ -45,7 +45,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
                     },
                     {
                       autocomplete: {
-                        search,
+                        query: search,
                         path: "username",
                         fuzzy: {
                           maxExpansions: 100,
@@ -54,7 +54,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
                     },
                     {
                       autocomplete: {
-                        search,
+                        query: search,
                         path: "email",
                         fuzzy: {
                           maxExpansions: 100,
