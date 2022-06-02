@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "lib/mongodb";
+import NextAuth from 'next-auth';
+import GitHubProvider from 'next-auth/providers/github';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import clientPromise from 'lib/mongodb';
 
 export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
@@ -17,9 +17,10 @@ export default NextAuth({
           email: profile.email,
           image: profile.avatar_url,
           followers: profile.followers,
+          verified: true
         };
-      },
-    }),
+      }
+    })
   ],
-  secret: process.env.SECRET,
+  secret: process.env.SECRET
 });
