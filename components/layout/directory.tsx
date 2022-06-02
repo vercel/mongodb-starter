@@ -44,7 +44,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                 type="search"
                 name="search"
                 id="search"
-                className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                className="focus:ring-gray-800 focus:border-gray-800 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 placeholder="Search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -84,7 +84,9 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                               <p className="text-sm font-medium text-gray-900">
                                 {user.name}
                               </p>
-                              {user.verified && <Check className="w-4 h-4" />}
+                              {user.verified && (
+                                <Check className="w-4 h-4 text-[#0070F3]" />
+                              )}
                             </div>
                             <p className="text-sm text-gray-500 truncate">
                               @{user.username}

@@ -1,6 +1,7 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
 import { MailIcon, PhoneIcon } from '@heroicons/react/solid';
+import { Check, MessageSquare } from '@/components/icons';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -36,10 +37,7 @@ export default function Profile({ user }: { user: UserProps }) {
                   type="button"
                   className="inline-flex justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
                 >
-                  <MailIcon
-                    className="-ml-1 mr-2 h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
+                  <MessageSquare className="-ml-1 mr-2 h-5 w-5 text-gray-400" />
                   <span>Message</span>
                 </button>
                 <button
@@ -56,9 +54,13 @@ export default function Profile({ user }: { user: UserProps }) {
             </div>
           </div>
           <div className="hidden sm:block 2xl:hidden mt-6 min-w-0 flex-1">
-            <h1 className="text-2xl font-bold text-gray-900 truncate">
-              {user.name}
-            </h1>
+            <div className="flex items-center space-x-2">
+              <h1 className="text-2xl font-bold text-gray-800 truncate">
+                {user.name}
+              </h1>
+              {user.verified && <Check className="w-6 h-6 text-[#0070F3]" />}
+            </div>
+            <p className="text-base text-gray-500">@{user.username}</p>
           </div>
         </div>
       </div>
@@ -114,5 +116,5 @@ export default function Profile({ user }: { user: UserProps }) {
 const tabs = [
   { name: 'Profile', href: '#', current: true },
   { name: 'Calendar', href: '#', current: false },
-  { name: 'Recognition', href: '#', current: false },
+  { name: 'Recognition', href: '#', current: false }
 ];
