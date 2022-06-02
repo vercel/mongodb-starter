@@ -1,4 +1,4 @@
-import connectToMongo from "@/lib/mongodb";
+import connectToMongo from '@/lib/mongodb';
 
 export interface UserProps {
   name: string;
@@ -15,7 +15,7 @@ export interface ResultProps {
 
 export async function getUser(username: string): Promise<UserProps> {
   const client = await connectToMongo;
-  const collection = client.db("test").collection("users");
+  const collection = client.db('test').collection('users');
   return await collection.findOne(
     { username },
     { projection: { _id: 0, emailVerified: 0 } }
@@ -24,81 +24,81 @@ export async function getUser(username: string): Promise<UserProps> {
 
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {
   const client = await connectToMongo;
-  const collection = client.db("test").collection("users");
+  const collection = client.db('test').collection('users');
   return await collection
     .aggregate([
       ...(search && search.length > 0
         ? [
             {
               $search: {
-                index: "users-index",
+                index: 'users-index',
                 compound: {
                   should: [
                     {
                       autocomplete: {
                         query: search,
-                        path: "name",
+                        path: 'name',
                         fuzzy: {
-                          maxExpansions: 100,
-                        },
-                      },
+                          maxExpansions: 100
+                        }
+                      }
                     },
                     {
                       autocomplete: {
                         query: search,
-                        path: "username",
+                        path: 'username',
                         fuzzy: {
-                          maxExpansions: 100,
-                        },
-                      },
+                          maxExpansions: 100
+                        }
+                      }
                     },
                     {
                       autocomplete: {
                         query: search,
-                        path: "email",
+                        path: 'email',
                         fuzzy: {
-                          maxExpansions: 100,
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            },
+                          maxExpansions: 100
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
           ]
         : []),
       {
         //sort by follower count
         $sort: {
-          followers: -1,
-        },
+          followers: -1
+        }
       },
       {
-        $limit: 10,
+        $limit: 50
       },
       {
         $group: {
           _id: {
-            $toLower: { $substr: ["$name", 0, 1] },
+            $toLower: { $substr: ['$name', 0, 1] }
           },
           users: {
             $push: {
-              name: "$name",
-              username: "$username",
-              email: "$email",
-              image: "$image",
-              followers: "$followers",
-            },
+              name: '$name',
+              username: '$username',
+              email: '$email',
+              image: '$image',
+              followers: '$followers'
+            }
           },
-          count: { $sum: 1 },
-        },
+          count: { $sum: 1 }
+        }
       },
       {
         //sort alphabetically
         $sort: {
-          _id: 1,
-        },
-      },
+          _id: 1
+        }
+      }
     ])
     .toArray();
 }
