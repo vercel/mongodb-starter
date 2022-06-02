@@ -1,11 +1,17 @@
 import { useState, ReactNode } from "react";
 import { MenuIcon } from "@heroicons/react/outline";
 import Sidebar from "./sidebar";
-import Profile from "../profile";
 import Navbar from "./navbar";
 import Directory from "./directory";
+import { ResultProps } from "@/lib/api/user";
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({
+  results,
+  children,
+}: {
+  results: ResultProps[];
+  children: ReactNode;
+}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -41,7 +47,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
             {children}
           </main>
-          <Directory />
+          <Directory results={results} />
         </div>
       </div>
     </div>

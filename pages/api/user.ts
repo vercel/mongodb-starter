@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getUsers } from "lib/api/user";
+import { searchUser } from "lib/api/user";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,11 +7,11 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      const { search } = req.query;
-      if (!search) {
+      const { query } = req.query;
+      if (!query) {
         res.status(400).send("Please provide a search query.");
       } else {
-        const result = await getUsers(search);
+        const result = await searchUser(query as string);
         return res.status(200).json(result);
       }
     } catch (e: any) {

@@ -5,29 +5,58 @@ export interface UserProps {
   username: string;
   email: string;
   image: string;
+  followers: number;
 }
 
-export async function getAllUsers(): Promise<UserProps[]> {
+export interface ResultProps {
+  _id: string;
+  users: UserProps[];
+}
+
+export async function getUser(username: string): Promise<UserProps> {
+  const client = await connectToMongo;
+  const collection = client.db("test").collection("users");
+  return await collection.findOne(
+    { username },
+    { projection: { _id: 0, emailVerified: 0 } }
+  );
+}
+
+export async function getAllUsers(): Promise<ResultProps[]> {
   const client = await connectToMongo;
   const collection = client.db("test").collection("users");
   return await collection
-    .find(
-      {},
+    .aggregate([
       {
-        projection: {
-          _id: 0,
-          name: 1,
-          username: 1,
-          email: 1,
-          image: 1,
+        $sort: {
+          followers: -1,
         },
-      }
-    )
-    .limit(10)
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $group: {
+          _id: {
+            $toLower: { $substr: ["$name", 0, 1] },
+          },
+          users: {
+            $push: {
+              name: "$name",
+              username: "$username",
+              email: "$email",
+              image: "$image",
+              followers: "$followers",
+            },
+          },
+          count: { $sum: 1 },
+        },
+      },
+    ])
     .toArray();
 }
 
-export async function getUsers(query: string) {
+export async function searchUser(query: string) {
   const client = await connectToMongo;
   const collection = client.db("test").collection("users");
   return await collection
@@ -38,11 +67,30 @@ export async function getUsers(query: string) {
           autocomplete: {
             query,
             path: "name",
-            fuzzy: {
-              maxEdits: 2,
-              prefixLength: 3,
+          },
+        },
+      },
+      {
+        $sort: {
+          followers: -1,
+        },
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $group: {
+          _id: { $toLower: { $substr: ["$name", 0, 1] } },
+          users: {
+            $push: {
+              name: "$name",
+              username: "$username",
+              email: "$email",
+              image: "$image",
+              followers: "$followers",
             },
           },
+          count: { $sum: 1 },
         },
       },
     ])
