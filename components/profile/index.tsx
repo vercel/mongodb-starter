@@ -7,16 +7,12 @@ function classNames(...classes: string[]) {
 }
 
 export default function Profile({ user }: { user: UserProps }) {
-  console.log(getGradient(user.username));
   return (
     <article>
-      {/* Profile header */}
       <div>
         <div
           className={classNames(
             'h-32 w-full lg:h-48',
-            // this doesn't work yet... don't know why
-            'bg-gradient-to-r from-indigo-300 to-purple-400',
             getGradient(user.username)
           )}
         />

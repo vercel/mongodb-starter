@@ -10,13 +10,9 @@ export const gradients = [
   'bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500',
 ];
 
-export function getRandomGradient() {
-  return gradients[Math.floor(Math.random() * gradients.length)];
-}
-
 /** Select a random gradient from the array of gradients based on a
- * hash of the username string. If the username has already been hashed,
- * reuse the same graident picked.
+ *  hash of the username string. If the username has already been hashed,
+ *  reuse the same graident picked.
  */
 export function getGradient(username: string) {
   function hashCode(str: string) {
