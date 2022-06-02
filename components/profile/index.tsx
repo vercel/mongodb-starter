@@ -1,18 +1,25 @@
-import { UserProps } from "@/lib/api/user";
-import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
+import { UserProps } from '@/lib/api/user';
+import { getGradient } from '@/lib/gradients';
+import { MailIcon, PhoneIcon } from '@heroicons/react/solid';
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 export default function Profile({ user }: { user: UserProps }) {
+  console.log(getGradient(user.username));
   return (
     <article>
       {/* Profile header */}
       <div>
-        <div>
-          <img
-            className="h-32 w-full object-cover lg:h-48"
-            src="https://images.unsplash.com/photo-1444628838545-ac4016a5418a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-            alt=""
-          />
-        </div>
+        <div
+          className={classNames(
+            'h-32 w-full lg:h-48',
+            // this doesn't work yet... don't know why
+            'bg-gradient-to-r from-indigo-300 to-purple-400',
+            getGradient(user.username)
+          )}
+        />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
             <div className="flex">
@@ -71,11 +78,11 @@ export default function Profile({ user }: { user: UserProps }) {
                   href={tab.href}
                   className={`${
                     tab.current
-                      ? "border-pink-500 text-gray-900"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      ? 'border-pink-500 text-gray-900'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }
                             whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-                  aria-current={tab.current ? "page" : undefined}
+                  aria-current={tab.current ? 'page' : undefined}
                 >
                   {tab.name}
                 </a>
@@ -109,7 +116,7 @@ export default function Profile({ user }: { user: UserProps }) {
   );
 }
 const tabs = [
-  { name: "Profile", href: "#", current: true },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Recognition", href: "#", current: false },
+  { name: 'Profile', href: '#', current: true },
+  { name: 'Calendar', href: '#', current: false },
+  { name: 'Recognition', href: '#', current: false },
 ];
