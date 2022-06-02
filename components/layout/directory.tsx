@@ -19,7 +19,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
   );
 
   return (
-    <aside className="flex-shrink-0 w-full sm:w-96 border-r border-gray-200">
+    <aside className="flex-shrink-0 w-full sm:w-96 h-full overflow-scroll border-r border-gray-200">
       <div className="px-6 pt-6 pb-4">
         <Link href="/">
           <a className="text-lg font-medium text-gray-900">Directory</a>

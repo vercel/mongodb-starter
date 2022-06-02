@@ -29,7 +29,7 @@ export default function Layout({
 
             {children}
           </main>
-          <div className="hidden md:order-first md:flex md:flex-col">
+          <div className="hidden md:order-first h-screen md:flex md:flex-col">
             <Directory results={results} />
           </div>
         </div>
