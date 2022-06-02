@@ -1,7 +1,7 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
 import { PhoneIcon } from '@heroicons/react/solid';
-import { Check, MessageSquare } from '@/components/icons';
+import { Check, MessageSquare, Upload } from '@/components/icons';
 import { useSession } from 'next-auth/react';
 import BlurImage from '../blur-image';
 
@@ -11,6 +11,7 @@ function classNames(...classes: string[]) {
 
 export default function Profile({ user }: { user: UserProps }) {
   const { data: session } = useSession();
+  console.log(session);
 
   return (
     <article>
@@ -23,7 +24,12 @@ export default function Profile({ user }: { user: UserProps }) {
         />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
-            <div className="h-24 w-24 rounded-full overflow-hidden ring-4 ring-white sm:h-32 sm:w-32">
+            <div className="relative group h-24 w-24 rounded-full overflow-hidden ring-4 ring-white sm:h-32 sm:w-32">
+              {session?.user?.username === user.username && (
+                <button className="absolute invisible group-hover:visible bg-gray-800 bg-opacity-50 w-full h-full z-10 transition-all flex items-center justify-center">
+                  <Upload className="h-6 w-6 text-white" />
+                </button>
+              )}
               <BlurImage
                 src={user.image}
                 alt={user.name}
