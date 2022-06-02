@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
 import Layout from '@/components/layout';

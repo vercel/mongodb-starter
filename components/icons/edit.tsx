@@ -1,4 +1,4 @@
-export default function MessageSquare({ className }: { className?: string }) {
+export default function EditIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -12,7 +12,7 @@ export default function MessageSquare({ className }: { className?: string }) {
       fill="none"
       shapeRendering="geometricPrecision"
     >
-      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+      <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" />{' '}
     </svg>
   );
 }

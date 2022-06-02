@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Profile({ user }: { user: UserProps }) {
+export default function Settings({ user }: { user: UserProps }) {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState('Profile');
 
