@@ -34,7 +34,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         <p className="mt-2 text-sm text-dark-accent-5">
           Search directory of 3,018 employees
         </p>
-        <form className="mt-6 flex space-x-4" action="#">
+        <form className="py-8 flex space-x-4" action="#">
           <div className="flex-1 min-w-0">
             <label htmlFor="search" className="sr-only">
               Search
@@ -57,10 +57,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         </form>
       </div>
       {/* Directory list */}
-      <nav
-        className="flex-1 pt-16 min-h-0 overflow-y-auto"
-        aria-label="Directory"
-      >
+      <nav className="flex-1 min-h-0 overflow-y-auto" aria-label="Directory">
         {data && data.length > 0 ? (
           data.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">

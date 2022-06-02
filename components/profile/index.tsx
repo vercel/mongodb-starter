@@ -48,6 +48,7 @@ export default function Profile({ user }: { user: UserProps }) {
                 <a
                   href={`https://github.com/${user.username}`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
                 >
                   <GitHubIcon className="mr-3 h-5 w-5 text-white" />
