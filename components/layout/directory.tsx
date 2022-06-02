@@ -83,7 +83,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                               {user.name}
                             </p>
                             <p className="text-sm text-gray-500 truncate">
-                              {user.email}
+                              @{user.username}
                             </p>
                           </div>
                         </div>
