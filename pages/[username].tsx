@@ -33,7 +33,6 @@ export const getStaticPaths = async () => {
   const paths = results.flatMap(({ users }) =>
     users.map((user) => ({ params: { username: user.username } }))
   );
-  console.log(paths);
   return {
     paths,
     fallback: true,

@@ -2,15 +2,28 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { LoadingDots } from "@/components/icons";
 import BlurImage from "../blur-image";
+import { MenuIcon } from "@heroicons/react/outline";
 
-export default function Navbar() {
+export default function Navbar({
+  setSidebarOpen,
+}: {
+  setSidebarOpen: (open: boolean) => void;
+}) {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   return (
     <nav
-      className="flex items-center justify-end px-4 h-12 sm:px-6 lg:px-8"
+      className="flex items-center justify-between md:justify-end px-4 h-12 sm:px-6 lg:px-8"
       aria-label="Navbar"
     >
+      <button
+        type="button"
+        className="inline-flex md:hidden items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-0"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <span className="sr-only">Open sidebar</span>
+        <MenuIcon className="h-6 w-6" aria-hidden="true" />
+      </button>
       {status !== "loading" &&
         (session?.user ? (
           <button
