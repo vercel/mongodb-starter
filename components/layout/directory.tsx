@@ -1,20 +1,21 @@
-import { FilterIcon, SearchIcon } from "@heroicons/react/solid";
-import { ResultProps } from "@/lib/api/user";
-import Link from "next/link";
-import useSWR from "swr";
-import fetcher from "@/lib/fetcher";
-import { useDebounce } from "@/lib/hooks/use-debounce";
-import { useState } from "react";
+import { FilterIcon, SearchIcon } from '@heroicons/react/solid';
+import { ResultProps } from '@/lib/api/user';
+import Link from 'next/link';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetcher';
+import { useDebounce } from '@/lib/hooks/use-debounce';
+import { useState } from 'react';
+import { Check } from '@/components/icons';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
   const { data } = useSWR<ResultProps[]>(
     `api/user?query=${debouncedQuery}`,
     fetcher,
     {
       fallbackData: results,
-      keepPreviousData: true,
+      keepPreviousData: true
     }
   );
 
@@ -79,9 +80,12 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                               className="absolute inset-0"
                               aria-hidden="true"
                             />
-                            <p className="text-sm font-medium text-gray-900">
-                              {user.name}
-                            </p>
+                            <div className="flex items-center space-x-1">
+                              <p className="text-sm font-medium text-gray-900">
+                                {user.name}
+                              </p>
+                              {user.verified && <Check className="w-4 h-4" />}
+                            </div>
                             <p className="text-sm text-gray-500 truncate">
                               @{user.username}
                             </p>

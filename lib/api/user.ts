@@ -6,6 +6,7 @@ export interface UserProps {
   email: string;
   image: string;
   followers: number;
+  verified: boolean;
 }
 
 export interface ResultProps {
@@ -87,7 +88,8 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
               username: '$username',
               email: '$email',
               image: '$image',
-              followers: '$followers'
+              followers: '$followers',
+              verified: '$verified'
             }
           },
           count: { $sum: 1 }
