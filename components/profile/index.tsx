@@ -25,7 +25,7 @@ export default function Profile({ user }: { user: UserProps }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
             <div className="relative group h-24 w-24 rounded-full overflow-hidden ring-4 ring-white sm:h-32 sm:w-32">
-              {session?.user?.username === user.username && (
+              {session?.username === user.username && (
                 <button className="absolute invisible group-hover:visible bg-gray-800 bg-opacity-50 w-full h-full z-10 transition-all flex items-center justify-center">
                   <Upload className="h-6 w-6 text-white" />
                 </button>
