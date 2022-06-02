@@ -14,6 +14,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
     fetcher,
     {
       fallbackData: results,
+      keepPreviousData: true,
     }
   );
 
