@@ -62,7 +62,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
       </div>
       {/* Directory list */}
       <nav
-        className="flex-1 pt-4 min-h-0 overflow-y-auto"
+        className="flex-1 pt-16 min-h-0 overflow-y-auto"
         aria-label="Directory"
       >
         {data && data.length > 0 ? (
