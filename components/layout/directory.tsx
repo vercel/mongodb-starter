@@ -1,11 +1,11 @@
 import { ResultProps } from '@/lib/api/user';
 import Link from 'next/link';
+import Image from 'next/image';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
 import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
 import { Check } from '@/components/icons';
-import BlurImage from '../blur-image';
 import { DirectoryIcon, SearchIcon } from '@/components/icons';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
@@ -71,11 +71,13 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                       <a>
                         <div className="relative px-6 py-4 flex items-center space-x-3 focus-within:ring-0">
                           <div className="flex-shrink-0 h-12 w-12 rounded-full overflow-hidden">
-                            <BlurImage
+                            <Image
                               src={user.image}
                               alt={user.name}
                               width={300}
                               height={300}
+                              placeholder="blur"
+                              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
                             />
                           </div>
                           <div className="flex-1 min-w-0">

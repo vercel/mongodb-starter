@@ -16,8 +16,8 @@ export default function BlurImage(props: ImageProps) {
           ? 'grayscale blur-2xl scale-110'
           : 'grayscale-0 blur-0 scale-100'
       }`}
-      // placeholder="blur"
-      // blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
+      placeholder="blur"
+      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
       onLoadingComplete={async () => {
         setLoading(false);
       }}
