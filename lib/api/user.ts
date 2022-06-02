@@ -71,9 +71,36 @@ export async function searchUser(query: string) {
       {
         $search: {
           index: "users-index",
-          autocomplete: {
-            query,
-            path: "name",
+          compound: {
+            should: [
+              {
+                autocomplete: {
+                  query,
+                  path: "name",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+              {
+                autocomplete: {
+                  query,
+                  path: "username",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+              {
+                autocomplete: {
+                  query,
+                  path: "email",
+                  fuzzy: {
+                    maxExpansions: 100,
+                  },
+                },
+              },
+            ],
           },
         },
       },
