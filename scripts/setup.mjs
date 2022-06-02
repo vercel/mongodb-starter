@@ -9,7 +9,18 @@ const client = new MongoClient(process.env.DATABASE_URL);
 const main = async () => {
   try {
     await client.connect();
-    await client.db('test').command({ ping: 1 });
+
+    const numUsers = await client
+      .db('test')
+      .collection('users')
+      .countDocuments();
+
+    if (numUsers) {
+      console.log('Database already exists with data');
+      client.close();
+      return;
+    }
+
     const records = [...Array(10)].map(() => {
       const [fName, lName] = faker.name.findName().split(' ');
       const username = faker.internet.userName(fName, lName);
