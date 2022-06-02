@@ -7,6 +7,7 @@ import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
 import { Check } from '@/components/icons';
 import BlurImage from '../blur-image';
+import DirectoryIcon from '../icons/directory';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
   const [query, setQuery] = useState('');
@@ -21,12 +22,17 @@ export default function Directory({ results }: { results: ResultProps[] }) {
   );
 
   return (
-    <aside className="flex-shrink-0 w-full sm:w-96 h-full overflow-scroll border-r border-gray-200">
-      <div className="px-6 pt-6 pb-4">
+    <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-gray-200">
+      <div className="px-6 pt-6 pb-0 sticky top-0 bg-black z-20">
         <Link href="/">
-          <a className="text-lg font-medium text-gray-900">Directory</a>
+          <a>
+            <div className="bg-dark-accent-1 rounded-2xl h-12 w-12 flex justify-center items-center">
+              <DirectoryIcon className="text-white" />
+            </div>
+          </a>
         </Link>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-8 text-2xl text-white font-bold">Directory</p>
+        <p className="mt-2 text-sm text-dark-accent-5">
           Search directory of 3,018 employees
         </p>
         <form className="mt-6 flex space-x-4" action="#">
@@ -34,10 +40,10 @@ export default function Directory({ results }: { results: ResultProps[] }) {
             <label htmlFor="search" className="sr-only">
               Search
             </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <div className="relative shadow-sm border-0 border-b-dark-accent-2 rounded-none border-b-[1px] ">
+              <div className="absolute bg-black inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <SearchIcon
-                  className="h-5 w-5 text-gray-400"
+                  className="h-4 w-4 text-dark-accent-3"
                   aria-hidden="true"
                 />
               </div>
@@ -45,7 +51,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                 type="search"
                 name="search"
                 id="search"
-                className="focus:ring-gray-800 focus:border-gray-800 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                className="text-white placeholder:text-dark-accent-3 focus:ring-transparent border-none bg-black focus:border-transparent block w-full pl-10 sm:text-sm rounded-md"
                 placeholder="Search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -55,20 +61,23 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         </form>
       </div>
       {/* Directory list */}
-      <nav className="flex-1 min-h-0 overflow-y-auto" aria-label="Directory">
+      <nav
+        className="flex-1 pt-4 min-h-0 overflow-y-auto"
+        aria-label="Directory"
+      >
         {data && data.length > 0 ? (
           data.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">
-              <div className="z-10 sticky top-0 border-t border-b border-gray-200 bg-gray-50 px-6 py-1 text-sm font-medium text-gray-500 uppercase">
+              <div className="z-10 sticky top-0 bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
                 <h3>{letter}</h3>
               </div>
-              <ul role="list" className="relative z-0 divide-y divide-gray-200">
+              <ul role="list" className="relative z-0">
                 {users.map((user) => (
                   <li key={user.username}>
                     <Link href={`/${user.username}`}>
                       <a>
-                        <div className="relative px-6 py-5 flex items-center space-x-3 hover:bg-gray-50 focus-within:ring-0">
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden">
+                        <div className="relative px-6 py-5 flex items-center space-x-3 focus-within:ring-0">
+                          <div className="flex-shrink-0 h-16 w-16 rounded-full overflow-hidden">
                             <BlurImage
                               src={user.image}
                               alt={user.name}
@@ -83,17 +92,18 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                               aria-hidden="true"
                             />
                             <div className="flex items-center space-x-1">
-                              <p className="text-sm font-medium text-gray-900">
+                              <p className="text-sm font-medium text-white">
                                 {user.name}
                               </p>
                               {user.verified && (
-                                <Check className="w-4 h-4 text-[#0070F3]" />
+                                <Check className="w-4 h-4 text-white" />
                               )}
                             </div>
-                            <p className="text-sm text-gray-500 truncate">
+                            <p className="text-sm text-dark-accent-5 truncate">
                               @{user.username}
                             </p>
                           </div>
+                          <div className="w-full left-3 bg-dark-accent-2 bottom-0 h-[1px] absolute" />
                         </div>
                       </a>
                     </Link>
