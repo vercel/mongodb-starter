@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Layout from '@/components/layout';
-import Profile from '@/components/profile/settings';
+import Profile from '@/components/profile';
 import { getUser, getAllUsers, UserProps, ResultProps } from '@/lib/api/user';
 import { getSession } from 'next-auth/react';
 
@@ -13,7 +13,7 @@ export default function Settings({
 }) {
   return (
     <Layout results={results}>
-      <Profile user={user} />
+      <Profile settings={true} user={user} />
     </Layout>
   );
 }

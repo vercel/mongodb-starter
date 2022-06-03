@@ -1,16 +1,53 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
-import { CheckInCircleIcon, EditIcon, GitHubIcon } from '@/components/icons';
+import {
+  CheckInCircleIcon,
+  CheckIcon,
+  EditIcon,
+  GitHubIcon,
+  UploadIcon,
+  XIcon
+} from '@/components/icons';
 import { useSession } from 'next-auth/react';
 import BlurImage from '../blur-image';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
 
-export default function Profile({ user }: { user: UserProps }) {
+export default function Profile({
+  settings,
+  user
+}: {
+  settings?: boolean;
+  user: UserProps;
+}) {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState('Profile');
+  const [data, setData] = useState({
+    image: user.image,
+    bio: user.bio || ''
+  });
+  const router = useRouter();
+  const settingsPage = settings || router.asPath === '/settings';
+
+  const onDismiss = useCallback(() => {
+    if (settingsPage) router.back();
+  }, [router]);
+
+  const onKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Escape') onDismiss();
+    },
+    [onDismiss]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onKeyDown]);
 
   return (
     <article className="min-h-[calc(100vh - 20px)]">
@@ -23,6 +60,11 @@ export default function Profile({ user }: { user: UserProps }) {
           className={`${profileWidth} -mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5`}
         >
           <div className="relative group h-24 w-24 rounded-full overflow-hidden sm:h-32 sm:w-32">
+            {settingsPage && (
+              <button className="absolute bg-gray-800 bg-opacity-50 hover:bg-opacity-70 w-full h-full z-10 transition-all flex items-center justify-center">
+                <UploadIcon className="h-6 w-6 text-white" />
+              </button>
+            )}
             <BlurImage
               src={user.image}
               alt={user.name}
@@ -77,21 +119,62 @@ export default function Profile({ user }: { user: UserProps }) {
           </div>
         </div>
       </div>
-      {session?.username === user.username && (
-        <Link href="/settings">
+      {settingsPage ? (
+        <div className="fixed bottom-10 right-10 flex space-x-3">
+          <button
+            className="rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all"
+            onClick={() => alert('saving')}
+          >
+            <CheckIcon className="h-4 w-4 text-white" />
+          </button>
+          <Link href={`/${user.username}`}>
+            <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+              <XIcon className="h-4 w-4 text-white" />
+            </a>
+          </Link>
+        </div>
+      ) : session?.username === user.username ? (
+        <Link
+          href={{ pathname: '/', query: { settings: true } }}
+          as="/settings"
+          shallow
+          scroll={false}
+        >
           <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
             <EditIcon className="h-4 w-4 text-white" />
           </a>
         </Link>
-      )}
+      ) : null}
 
       {/* Bio */}
       <div className={`${profileWidth} mt-16`}>
         <h2 className="font-semibold text-lg text-white">Bio</h2>
-        <p
-          className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono"
-          dangerouslySetInnerHTML={{ __html: about }}
-        />
+        {settingsPage ? (
+          <>
+            <TextareaAutosize
+              name="description"
+              onInput={(e) =>
+                setData({
+                  ...data,
+                  bio: (e.target as HTMLTextAreaElement).value
+                })
+              }
+              className="mt-3 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-[#333333] focus:border-white resize-none focus:outline-none focus:ring-0"
+              placeholder="No description provided."
+              value={data.bio}
+            />
+            <div className="flex justify-end w-full max-w-2xl">
+              <p className="text-gray-400 font-mono text-sm">
+                {data.bio.length}/256
+              </p>
+            </div>
+          </>
+        ) : (
+          <p
+            className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono"
+            dangerouslySetInnerHTML={{ __html: about }}
+          />
+        )}
       </div>
     </article>
   );
