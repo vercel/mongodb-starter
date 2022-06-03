@@ -5,7 +5,7 @@
 		"build": "yarn setup && next build",
 		"start": "next start",
 		"lint": "next lint",
-    "setup": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/setup.mjs"
+		"setup": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/setup.mjs"
 	},
 	"dependencies": {
 		"@headlessui/react": "^1.6.4",
@@ -21,6 +21,7 @@
 		"next-auth": "^4.3.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
+		"react-textarea-autosize": "^8.3.4",
 		"swr": "^2.0.0-beta.1"
 	},
 	"devDependencies": {
@@ -33,9 +34,9 @@
 		"typescript": "^4.6.2"
 	},
 	"prettier": {
-    "arrowParens": "always",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "none"
-  }
+		"arrowParens": "always",
+		"singleQuote": true,
+		"tabWidth": 2,
+		"trailingComma": "none"
+	}
 }

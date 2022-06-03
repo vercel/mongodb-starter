@@ -14,7 +14,7 @@ export default function Layout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-screen-2xl mx-auto h-full flex overflow-hidden bg-black">
+    <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
