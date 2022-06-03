@@ -18,7 +18,6 @@ export default async function handler(
     }
   } else if (req.method === 'PUT') {
     const { username, image, bio } = req.body;
-    console.log(req.body);
     const session = await getSession({ req });
     if (!session || session.username !== username) {
       return res.status(401).json({
