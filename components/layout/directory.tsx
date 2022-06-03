@@ -25,7 +25,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
       <div className="px-6 pt-6 pb-0 sticky top-0 bg-black z-20">
         <Link href="/">
           <a>
-            <div className="bg-dark-accent-1 rounded-2xl h-12 w-12 flex justify-center items-center">
+            <div className="bg-dark-accent-1 hover:bg-dark-accent-2 transition-all rounded-2xl h-12 w-12 flex justify-center items-center">
               <DirectoryIcon className="text-white" />
             </div>
           </a>
