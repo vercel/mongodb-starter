@@ -25,7 +25,6 @@ export default async function handler(
       });
     }
     try {
-      console.log(bio);
       const result = await updateUser(username, image, bio);
       if (result) {
         await res.unstable_revalidate(`/${username}`);
