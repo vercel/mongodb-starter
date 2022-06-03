@@ -36,21 +36,9 @@ export default function Profile({
   const router = useRouter();
   const settingsPage = settings || router.asPath === '/settings';
 
-  const onDismiss = useCallback(() => {
-    if (settingsPage) router.back();
+  const handleDismiss = useCallback(() => {
+    if (settingsPage) router.replace(`/${user.username}`);
   }, [router]);
-
-  const onKeyDown = useCallback(
-    (e) => {
-      if (e.key === 'Escape') onDismiss();
-    },
-    [onDismiss]
-  );
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [onKeyDown]);
 
   const handleSave = useCallback(async () => {
     setSaving(true);
@@ -71,6 +59,22 @@ export default function Profile({
       console.error(error);
     }
   }, [data]);
+
+  const onKeyDown = useCallback(
+    async (e) => {
+      if (e.key === 'Escape') {
+        handleDismiss();
+      } else if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
+        await handleSave();
+      }
+    },
+    [handleDismiss]
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onKeyDown]);
 
   return (
     <article className="min-h-[calc(100vh - 20px)]">
