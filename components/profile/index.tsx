@@ -158,7 +158,7 @@ export default function Profile({
             )}
           </button>
           <Link
-            href={{ pathname: '/', query: { username: user.username } }}
+            href={`/${user.username}`}
             as={`/${user.username}`}
             shallow
             replace
@@ -170,7 +170,7 @@ export default function Profile({
         </div>
       ) : session?.username === user.username ? (
         <Link
-          href={{ pathname: '/', query: { settings: true } }}
+          href={`/${user.username}`}
           as="/settings"
           shallow
           replace
