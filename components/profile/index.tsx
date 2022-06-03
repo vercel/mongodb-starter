@@ -5,6 +5,7 @@ import {
   CheckIcon,
   EditIcon,
   GitHubIcon,
+  LoadingDots,
   UploadIcon,
   XIcon
 } from '@/components/icons';
@@ -26,7 +27,9 @@ export default function Profile({
 }) {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState('Profile');
+  const [saving, setSaving] = useState(false);
   const [data, setData] = useState({
+    username: user.username,
     image: user.image,
     bio: user.bio || ''
   });
@@ -48,6 +51,26 @@ export default function Profile({
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [onKeyDown]);
+
+  const handleSave = useCallback(async () => {
+    setSaving(true);
+    try {
+      const response = await fetch('/api/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      if (response.ok) {
+        router.replace(`/${user.username}`);
+        setSaving(false);
+      }
+    } catch (error) {
+      setSaving(false);
+      console.error(error);
+    }
+  }, [data]);
 
   return (
     <article className="min-h-[calc(100vh - 20px)]">
@@ -122,12 +145,24 @@ export default function Profile({
       {settingsPage ? (
         <div className="fixed bottom-10 right-10 flex space-x-3">
           <button
-            className="rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all"
-            onClick={() => alert('saving')}
+            className={`${
+              saving ? 'cursor-not-allowed' : ''
+            } rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all`}
+            disabled={saving}
+            onClick={handleSave}
           >
-            <CheckIcon className="h-4 w-4 text-white" />
+            {saving ? (
+              <LoadingDots color="white" />
+            ) : (
+              <CheckIcon className="h-4 w-4 text-white" />
+            )}
           </button>
-          <Link href={`/${user.username}`}>
+          <Link
+            href={{ pathname: '/', query: { username: user.username } }}
+            as={`/${user.username}`}
+            shallow
+            replace
+          >
             <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
               <XIcon className="h-4 w-4 text-white" />
             </a>
@@ -138,6 +173,7 @@ export default function Profile({
           href={{ pathname: '/', query: { settings: true } }}
           as="/settings"
           shallow
+          replace
           scroll={false}
         >
           <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
@@ -159,7 +195,7 @@ export default function Profile({
                   bio: (e.target as HTMLTextAreaElement).value
                 })
               }
-              className="mt-3 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-[#333333] focus:border-white resize-none focus:outline-none focus:ring-0"
+              className="mt-1 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-[#333333] focus:border-white resize-none focus:outline-none focus:ring-0"
               placeholder="No description provided."
               value={data.bio}
             />
@@ -172,7 +208,7 @@ export default function Profile({
         ) : (
           <p
             className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono"
-            dangerouslySetInnerHTML={{ __html: about }}
+            dangerouslySetInnerHTML={{ __html: user.bio || about }}
           />
         )}
       </div>
