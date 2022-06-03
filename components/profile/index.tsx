@@ -27,7 +27,6 @@ export default function Profile({
   user: UserProps;
 }) {
   const { data: session } = useSession();
-  const [activeTab, setActiveTab] = useState('Profile');
   const [saving, setSaving] = useState(false);
   const [data, setData] = useState({
     username: user.username,
@@ -41,8 +40,9 @@ export default function Profile({
     if (settingsPage) router.replace(`/${user.username}`);
   }, [router]);
 
-  const handleSave = useCallback(async () => {
+  const handleSave = async () => {
     setSaving(true);
+    console.log(data);
     try {
       const response = await fetch('/api/user', {
         method: 'PUT',
@@ -59,18 +59,15 @@ export default function Profile({
       setSaving(false);
       console.error(error);
     }
-  }, [data]);
+  };
 
-  const onKeyDown = useCallback(
-    async (e) => {
-      if (e.key === 'Escape') {
-        handleDismiss();
-      } else if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
-        await handleSave();
-      }
-    },
-    [handleDismiss]
-  );
+  const onKeyDown = async (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleDismiss();
+    } else if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      await handleSave();
+    }
+  };
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);
@@ -78,7 +75,7 @@ export default function Profile({
   }, [onKeyDown]);
 
   return (
-    <article className="min-h-[calc(100vh - 20px)]">
+    <article className="min-h-[calc(100vh - 20px)] pb-20">
       <div>
         <div
           className={`h-32 w-full lg:h-48 
@@ -132,13 +129,13 @@ export default function Profile({
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
-                  onClick={() => setActiveTab(tab.name)}
+                  disabled={tab.name !== 'Profile'}
                   className={`${
-                    activeTab === tab.name
+                    tab.name === 'Profile'
                       ? 'border-white text-white'
-                      : 'border-transparent text-gray-400'
+                      : 'border-transparent text-gray-400 cursor-not-allowed'
                   }
-                            whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm font-mono`}
+                    whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm font-mono`}
                 >
                   {tab.name}
                 </button>
@@ -162,20 +159,14 @@ export default function Profile({
               <CheckIcon className="h-4 w-4 text-white" />
             )}
           </button>
-          <Link href={`/${user.username}`} shallow replace>
+          <Link href={`/${user.username}`} shallow replace scroll={false}>
             <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
               <XIcon className="h-4 w-4 text-white" />
             </a>
           </Link>
         </div>
       ) : session?.username === user.username ? (
-        <Link
-          href={`/${user.username}`}
-          as="/settings"
-          shallow
-          replace
-          scroll={false}
-        >
+        <Link href="/settings" shallow replace scroll={false}>
           <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
             <EditIcon className="h-4 w-4 text-white" />
           </a>
@@ -189,12 +180,12 @@ export default function Profile({
           <>
             <TextareaAutosize
               name="description"
-              onInput={(e) =>
+              onInput={(e) => {
                 setData({
                   ...data,
                   bio: (e.target as HTMLTextAreaElement).value
-                })
-              }
+                });
+              }}
               className="mt-1 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-[#333333] focus:border-white resize-none focus:outline-none focus:ring-0"
               placeholder="No description provided."
               value={data.bio}
@@ -216,7 +207,7 @@ export default function Profile({
 }
 
 const tabs = [
-  { name: 'Profile', href: '#', current: true },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Recognition', href: '#', current: false }
+  { name: 'Profile' },
+  { name: 'Work History' },
+  { name: 'Contact' }
 ];
