@@ -74,10 +74,10 @@ export default function Profile({
   }, [onKeyDown]);
 
   return (
-    <article className="min-h-[calc(100vh - 20px)] pb-20">
+    <article className="min-h-screen pb-20">
       <div>
         <div
-          className={`h-32 w-full lg:h-48 
+          className={`h-48 w-full lg:h-64 
           ${getGradient(user.username)}`}
         />
         <div
@@ -85,7 +85,12 @@ export default function Profile({
         >
           <div className="relative group h-24 w-24 rounded-full overflow-hidden sm:h-32 sm:w-32">
             {settingsPage && (
-              <button className="absolute bg-gray-800 bg-opacity-50 hover:bg-opacity-70 w-full h-full z-10 transition-all flex items-center justify-center">
+              <button
+                className="absolute bg-gray-800 bg-opacity-50 hover:bg-opacity-70 w-full h-full z-10 transition-all flex items-center justify-center"
+                onClick={() =>
+                  alert('Image upload has been disabled for demo purposes.')
+                }
+              >
                 <UploadIcon className="h-6 w-6 text-white" />
               </button>
             )}
@@ -105,17 +110,31 @@ export default function Profile({
                 <CheckInCircleIcon className="w-6 h-6 text-[#0070F3]" />
               )}
             </div>
-            <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
-              <a
-                href={`https://github.com/${user.username}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
-              >
-                <GitHubIcon className="mr-3 h-5 w-5 text-white" />
-                <span>View GitHub Profile</span>
-              </a>
-            </div>
+            {user.verified ? (
+              <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
+                <a
+                  href={`https://github.com/${user.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
+                >
+                  <GitHubIcon className="mr-3 h-5 w-5 text-white" />
+                  <span>View GitHub Profile</span>
+                </a>
+              </div>
+            ) : (
+              <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
+                <a
+                  href="https://github.com/vercel/mongodb-starter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
+                >
+                  <GitHubIcon className="mr-3 h-5 w-5 text-white" />
+                  <span>Demo Account</span>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

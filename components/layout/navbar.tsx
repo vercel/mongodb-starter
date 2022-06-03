@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { LoadingDots } from '@/components/icons';
 import BlurImage from '../blur-image';
 import { MenuIcon } from '@heroicons/react/outline';
+import Link from 'next/link';
 
 export default function Navbar({
   setSidebarOpen
@@ -13,7 +14,7 @@ export default function Navbar({
   const [loading, setLoading] = useState(false);
   return (
     <nav
-      className="flex items-center justify-between md:justify-end px-4 h-12 sm:px-6 lg:px-8"
+      className="absolute right-0 w-full flex items-center justify-between md:justify-end px-4 h-12 sm:px-6 lg:px-8"
       aria-label="Navbar"
     >
       <button
@@ -26,20 +27,19 @@ export default function Navbar({
       </button>
       {status !== 'loading' &&
         (session?.user ? (
-          <button
-            className="w-8 h-8 rounded-full overflow-hidden"
-            onClick={() => signOut()}
-          >
-            <BlurImage
-              src={
-                session.user.image ||
-                `https://avatar.tobi.sh/${session.user.name}`
-              }
-              alt={session.user.name || 'User'}
-              width={300}
-              height={300}
-            />
-          </button>
+          <Link href={`/${session.username}`}>
+            <a className="w-8 h-8 rounded-full overflow-hidden">
+              <BlurImage
+                src={
+                  session.user.image ||
+                  `https://avatar.tobi.sh/${session.user.name}`
+                }
+                alt={session.user.name || 'User'}
+                width={300}
+                height={300}
+              />
+            </a>
+          </Link>
         ) : (
           <button
             disabled={loading}
