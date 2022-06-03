@@ -57,7 +57,10 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         </form>
       </div>
       {/* Directory list */}
-      <nav className="flex-1 min-h-0 overflow-y-auto" aria-label="Directory">
+      <nav
+        className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden"
+        aria-label="Directory"
+      >
         {data && data.length > 0 ? (
           data.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">
@@ -87,7 +90,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                               aria-hidden="true"
                             />
                             <div className="flex items-center space-x-1">
-                              <p className="text-sm font-medium text-white">
+                              <p className="text-sm font-medium text-white truncate">
                                 {user.name}
                               </p>
                               {user.verified && (
