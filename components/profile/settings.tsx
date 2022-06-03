@@ -7,9 +7,9 @@ import {
   XIcon,
   GitHubIcon
 } from '@/components/icons';
-import BlurImage from '../blur-image';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import TextareaAutosize from 'react-textarea-autosize';
 import { profileWidth } from '.';
 
@@ -33,11 +33,13 @@ export default function Profile({ user }: { user: UserProps }) {
           <button className="absolute bg-gray-800 bg-opacity-50 hover:bg-opacity-70 w-full h-full z-10 transition-all flex items-center justify-center">
             <UploadIcon className="h-6 w-6 text-white" />
           </button>
-          <BlurImage
+          <Image
             src={user.image}
             alt={user.name}
             width={300}
             height={300}
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
           />
         </div>
         <div className="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
