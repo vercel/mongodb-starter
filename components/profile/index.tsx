@@ -15,6 +15,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TextareaAutosize from 'react-textarea-autosize';
+import { MDXRemote } from 'next-mdx-remote';
 
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
 
@@ -205,20 +206,14 @@ export default function Profile({
             </div>
           </>
         ) : (
-          <p
-            className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono"
-            dangerouslySetInnerHTML={{ __html: user.bio || about }}
-          />
+          <article className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono prose prose-headings:text-white">
+            <MDXRemote {...user.bioMdx} />
+          </article>
         )}
       </div>
     </article>
   );
 }
-
-const about = `
-Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut sit dolor consectetur urna, dui cras nec sed. Cursus risus congue arcu aenean posuere aliquam.
-
-Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.`;
 
 const tabs = [
   { name: 'Profile', href: '#', current: true },

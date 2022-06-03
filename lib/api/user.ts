@@ -1,4 +1,8 @@
 import connectToMongo from '@/lib/mongodb';
+import { remark } from 'remark';
+import remarkMdx from 'remark-mdx';
+import { serialize } from 'next-mdx-remote/serialize';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 export interface UserProps {
   name: string;
@@ -6,6 +10,7 @@ export interface UserProps {
   email: string;
   image: string;
   bio: string;
+  bioMdx: MDXRemoteSerializeResult<Record<string, unknown>>;
   followers: number;
   verified: boolean;
 }
@@ -15,13 +20,38 @@ export interface ResultProps {
   users: UserProps[];
 }
 
+async function getMdxSource(postContents: string) {
+  // Use remark plugins to convert markdown into HTML string
+  const processedContent = await remark()
+    // Native remark plugin that parses markdown into MDX
+    .use(remarkMdx)
+    .process(postContents);
+
+  // Convert converted html to string format
+  const contentHtml = String(processedContent);
+
+  // Serialize the content string into MDX
+  const mdxSource = await serialize(contentHtml);
+
+  return mdxSource;
+}
+
+const placeholderBio = `
+Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut sit dolor consectetur urna, dui cras nec sed. Cursus risus congue arcu aenean posuere aliquam.
+
+Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.`;
+
 export async function getUser(username: string): Promise<UserProps> {
   const client = await connectToMongo;
   const collection = client.db('test').collection('users');
-  return await collection.findOne(
+  const results = await collection.findOne(
     { username },
     { projection: { _id: 0, emailVerified: 0 } }
   );
+  return {
+    ...results,
+    bioMdx: await getMdxSource(results.bio || placeholderBio)
+  };
 }
 
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {
