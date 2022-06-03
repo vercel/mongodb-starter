@@ -1,4 +1,4 @@
-export default function Upload({ className }: { className?: string }) {
+export default function UploadIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}

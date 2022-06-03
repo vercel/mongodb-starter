@@ -1,6 +1,6 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
-import { Check, Upload, EditIcon, GitHubIcon } from '@/components/icons';
+import { CheckInCircleIcon, EditIcon, GitHubIcon } from '@/components/icons';
 import { useSession } from 'next-auth/react';
 import BlurImage from '../blur-image';
 import { useState } from 'react';
@@ -43,7 +43,9 @@ export default function Profile({ user }: { user: UserProps }) {
                 <h1 className="text-2xl font-semibold text-white truncate">
                   {user.name}
                 </h1>
-                {user.verified && <Check className="w-6 h-6 text-[#0070F3]" />}
+                {user.verified && (
+                  <CheckInCircleIcon className="w-6 h-6 text-[#0070F3]" />
+                )}
               </div>
               <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
                 <a

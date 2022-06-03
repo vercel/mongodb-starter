@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Layout from '@/components/layout';
-import Profile from '@/components/profile';
+import Profile from '@/components/profile/settings';
 import { getUser, getAllUsers, UserProps, ResultProps } from '@/lib/api/user';
 import { getSession } from 'next-auth/react';
 

@@ -1,6 +1,12 @@
 import { UserProps } from '@/lib/api/user';
 import { getGradient } from '@/lib/gradients';
-import { Check, Upload, EditIcon, GitHubIcon } from '@/components/icons';
+import {
+  CheckInCircleIcon,
+  UploadIcon,
+  CheckIcon,
+  XIcon,
+  GitHubIcon
+} from '@/components/icons';
 import { useSession } from 'next-auth/react';
 import BlurImage from '../blur-image';
 import { useState } from 'react';
@@ -10,8 +16,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Settings({ user }: { user: UserProps }) {
-  const { data: session } = useSession();
+export default function Profile({ user }: { user: UserProps }) {
   const [activeTab, setActiveTab] = useState('Profile');
 
   return (
@@ -26,11 +31,9 @@ export default function Settings({ user }: { user: UserProps }) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
             <div className="relative group h-24 w-24 rounded-full overflow-hidden sm:h-32 sm:w-32">
-              {/* {session?.username === user.username && (
-                <button className="absolute invisible group-hover:visible bg-gray-800 bg-opacity-50 w-full h-full z-10 transition-all flex items-center justify-center">
-                  <Upload className="h-6 w-6 text-white" />
-                </button>
-              )} */}
+              <button className="absolute bg-gray-800 bg-opacity-50 hover:bg-opacity-70 w-full h-full z-10 transition-all flex items-center justify-center">
+                <UploadIcon className="h-6 w-6 text-white" />
+              </button>
               <BlurImage
                 src={user.image}
                 alt={user.name}
@@ -43,7 +46,9 @@ export default function Settings({ user }: { user: UserProps }) {
                 <h1 className="text-2xl font-semibold text-white truncate">
                   {user.name}
                 </h1>
-                {user.verified && <Check className="w-6 h-6 text-[#0070F3]" />}
+                {user.verified && (
+                  <CheckInCircleIcon className="w-6 h-6 text-[#0070F3]" />
+                )}
               </div>
               <div className="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
                 <a
@@ -84,13 +89,19 @@ export default function Settings({ user }: { user: UserProps }) {
           </div>
         </div>
       </div>
-      {session?.username === user.username && (
-        <Link href="/settings">
-          <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-            <EditIcon className="h-4 w-4 text-white" />
+      <div className="fixed bottom-10 right-10 flex space-x-3">
+        <button
+          className="rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all"
+          onClick={() => alert('saving')}
+        >
+          <CheckIcon className="h-4 w-4 text-white" />
+        </button>
+        <Link href={`/${user.username}`}>
+          <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+            <XIcon className="h-4 w-4 text-white" />
           </a>
         </Link>
-      )}
+      </div>
 
       {/* Description list */}
       {/* <div className="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

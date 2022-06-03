@@ -1,4 +1,4 @@
-export default function XCircleIcon({ className }: { className?: string }) {
+export default function XIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -12,9 +12,8 @@ export default function XCircleIcon({ className }: { className?: string }) {
       fill="none"
       shapeRendering="geometricPrecision"
     >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M15 9l-6 6" />
-      <path d="M9 9l6 6" />
+      <path d="M18 6L6 18" />
+      <path d="M6 6l12 12" />
     </svg>
   );
 }

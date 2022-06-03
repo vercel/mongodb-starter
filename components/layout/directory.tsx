@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
 import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
-import { Check } from '@/components/icons';
+import { CheckInCircleIcon } from '@/components/icons';
 import { DirectoryIcon, SearchIcon } from '@/components/icons';
 
 export default function Directory({ results }: { results: ResultProps[] }) {
@@ -91,7 +91,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
                                 {user.name}
                               </p>
                               {user.verified && (
-                                <Check className="w-4 h-4 text-white" />
+                                <CheckInCircleIcon className="w-4 h-4 text-white" />
                               )}
                             </div>
                             <p className="text-sm text-dark-accent-5 truncate">
