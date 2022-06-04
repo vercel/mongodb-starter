@@ -33,14 +33,19 @@ export default function Profile({
     image: user.image,
     bio: user.bio || ''
   });
+  const [error, setError] = useState('');
   const router = useRouter();
-  const settingsPage = settings || router.query.settings;
+  console.log(router);
+  const settingsPage =
+    settings ||
+    (router.query.settings === 'true' && router.asPath === '/settings');
 
   const handleDismiss = useCallback(() => {
     if (settingsPage) router.replace(`/${user.username}`);
   }, [router]);
 
   const handleSave = async () => {
+    setError('');
     setSaving(true);
     try {
       const response = await fetch('/api/user', {
@@ -52,12 +57,15 @@ export default function Profile({
       });
       if (response.ok) {
         router.replace(`/${user.username}`);
-        setSaving(false);
+      } else if (response.status === 401) {
+        setError('Not authorized to edit this profile.');
+      } else {
+        setError('Error saving profile.');
       }
     } catch (error) {
-      setSaving(false);
       console.error(error);
     }
+    setSaving(false);
   };
 
   const onKeyDown = async (e: KeyboardEvent) => {
@@ -195,7 +203,8 @@ export default function Profile({
 
       {/* Edit buttons */}
       {settingsPage ? (
-        <div className="fixed bottom-10 right-10 flex space-x-3">
+        <div className="fixed bottom-10 right-10 flex items-center space-x-3">
+          <p className="text-sm text-gray-500">{error}</p>
           <button
             className={`${
               saving ? 'cursor-not-allowed' : ''
