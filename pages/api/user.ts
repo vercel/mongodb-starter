@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getAllUsers, updateUser } from 'lib/api/user';
 import { getSession } from 'next-auth/react';
+import { getMdxSource } from 'lib/api/user';
 
 export default async function handler(
   req: NextApiRequest,
@@ -29,7 +30,8 @@ export default async function handler(
       if (result) {
         await res.unstable_revalidate(`/${username}`);
       }
-      return res.status(200).json(result);
+      const bioMdx = await getMdxSource(bio);
+      return res.status(200).json(bioMdx);
     } catch (e: any) {
       console.log(e);
       return res.status(500).json({

@@ -31,7 +31,8 @@ export default function Profile({
   const [data, setData] = useState({
     username: user.username,
     image: user.image,
-    bio: user.bio || ''
+    bio: user.bio || '',
+    bioMdx: user.bioMdx
   });
   const [error, setError] = useState('');
   const router = useRouter();
@@ -55,7 +56,12 @@ export default function Profile({
         body: JSON.stringify(data)
       });
       if (response.ok) {
-        router.replace(`/${user.username}`);
+        const bioMdx = await response.json();
+        setData({
+          ...data,
+          bioMdx
+        });
+        router.replace(`/${user.username}`, undefined, { shallow: true });
       } else if (response.status === 401) {
         setError('Not authorized to edit this profile.');
       } else {
@@ -195,7 +201,7 @@ export default function Profile({
           </>
         ) : (
           <article className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono prose prose-headings:text-white">
-            <MDXRemote {...user.bioMdx} />
+            <MDXRemote {...data.bioMdx} />
           </article>
         )}
       </div>

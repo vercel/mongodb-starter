@@ -20,7 +20,7 @@ export interface ResultProps {
   users: UserProps[];
 }
 
-async function getMdxSource(postContents: string) {
+export async function getMdxSource(postContents: string) {
   // Use remark plugins to convert markdown into HTML string
   const processedContent = await remark()
     // Native remark plugin that parses markdown into MDX
