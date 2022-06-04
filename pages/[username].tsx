@@ -42,7 +42,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { username } = context.params as Params; // https://wallis.dev/blog/nextjs-getstaticprops-and-getstaticpaths-with-typescript
   const results = await getAllUsers();
   const user = await getUser(username);
-
   if (!user) return { notFound: true, revalidate: 10 };
 
   return {

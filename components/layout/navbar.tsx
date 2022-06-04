@@ -50,8 +50,8 @@ export default function Navbar({
             className={`${
               loading
                 ? 'bg-gray-200 border-gray-300'
-                : 'bg-white hover:bg-black border-white'
-            } w-16 h-8 py-1 text-black hover:text-white border rounded-md text-sm transition-all`}
+                : 'bg-black hover:bg-white border-black'
+            } w-16 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
           >
             {loading ? <LoadingDots color="gray" /> : 'Log In'}
           </button>

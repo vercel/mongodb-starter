@@ -41,17 +41,21 @@ Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut si
 
 Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.`;
 
-export async function getUser(username: string): Promise<UserProps> {
+export async function getUser(username: string): Promise<UserProps | null> {
   const client = await connectToMongo;
   const collection = client.db('test').collection('users');
   const results = await collection.findOne(
     { username },
     { projection: { _id: 0, emailVerified: 0 } }
   );
-  return {
-    ...results,
-    bioMdx: await getMdxSource(results.bio || placeholderBio)
-  };
+  if (results) {
+    return {
+      ...results,
+      bioMdx: await getMdxSource(results.bio || placeholderBio)
+    };
+  } else {
+    return null;
+  }
 }
 
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {

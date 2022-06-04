@@ -34,7 +34,7 @@ export default function Profile({
     bio: user.bio || ''
   });
   const router = useRouter();
-  const settingsPage = settings || router.asPath === '/settings';
+  const settingsPage = settings || router.query.settings;
 
   const handleDismiss = useCallback(() => {
     if (settingsPage) router.replace(`/${user.username}`);
@@ -74,7 +74,7 @@ export default function Profile({
   }, [onKeyDown]);
 
   return (
-    <article className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20">
       <div>
         <div
           className={`h-48 w-full lg:h-64 
@@ -162,34 +162,6 @@ export default function Profile({
           </div>
         </div>
       </div>
-      {settingsPage ? (
-        <div className="fixed bottom-10 right-10 flex space-x-3">
-          <button
-            className={`${
-              saving ? 'cursor-not-allowed' : ''
-            } rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all`}
-            disabled={saving}
-            onClick={handleSave}
-          >
-            {saving ? (
-              <LoadingDots color="white" />
-            ) : (
-              <CheckIcon className="h-4 w-4 text-white" />
-            )}
-          </button>
-          <Link href={`/${user.username}`} shallow replace scroll={false}>
-            <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-              <XIcon className="h-4 w-4 text-white" />
-            </a>
-          </Link>
-        </div>
-      ) : session?.username === user.username ? (
-        <Link href="/settings" shallow replace scroll={false}>
-          <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-            <EditIcon className="h-4 w-4 text-white" />
-          </a>
-        </Link>
-      ) : null}
 
       {/* Bio */}
       <div className={`${profileWidth} mt-16`}>
@@ -220,7 +192,43 @@ export default function Profile({
           </article>
         )}
       </div>
-    </article>
+
+      {/* Edit buttons */}
+      {settingsPage ? (
+        <div className="fixed bottom-10 right-10 flex space-x-3">
+          <button
+            className={`${
+              saving ? 'cursor-not-allowed' : ''
+            } rounded-full border border-[#0070F3] hover:border-2 w-12 h-12 flex justify-center items-center transition-all`}
+            disabled={saving}
+            onClick={handleSave}
+          >
+            {saving ? (
+              <LoadingDots color="white" />
+            ) : (
+              <CheckIcon className="h-4 w-4 text-white" />
+            )}
+          </button>
+          <Link href={`/${user.username}`} shallow replace scroll={false}>
+            <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+              <XIcon className="h-4 w-4 text-white" />
+            </a>
+          </Link>
+        </div>
+      ) : session?.username === user.username ? (
+        <Link
+          href={{ query: { settings: true } }}
+          as="/settings"
+          shallow
+          replace
+          scroll={false}
+        >
+          <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+            <EditIcon className="h-4 w-4 text-white" />
+          </a>
+        </Link>
+      ) : null}
+    </div>
   );
 }
 

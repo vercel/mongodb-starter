@@ -1,30 +1,30 @@
-import { GetStaticProps } from "next";
-import Layout from "@/components/layout";
-import Profile from "@/components/profile";
-import { getUser, getAllUsers, ResultProps, UserProps } from "@/lib/api/user";
+import { GetStaticProps } from 'next';
+import Layout from '@/components/layout';
+import Profile from '@/components/profile';
+import { getUser, getAllUsers, ResultProps, UserProps } from '@/lib/api/user';
 
 export default function Home({
   results,
-  user,
+  user
 }: {
   results: ResultProps[];
   user: UserProps;
 }) {
   return (
     <Layout results={results}>
-      <Profile user={user} />
+      <Profile user={user} settings={false} />
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
-  const user = await getUser("steven-tey");
+  const user = await getUser('steven-tey');
   return {
     props: {
       results,
-      user,
+      user
     },
-    revalidate: 60,
+    revalidate: 60
   };
 };
