@@ -25,9 +25,11 @@ export default function User({
     title: `${user.name}'s Profile | MongoDB Starter Kit`,
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
-    ogUrl: 'https://mongodb.vercel.sh/'
+    ogImage:
+      'https://assets.vercel.com/image/upload/v1654311846/mongodb-demo-app_i12ysf.png',
+    ogUrl: 'https://mongodb.vercel.app'
   };
+
   return (
     <Layout meta={meta} results={results}>
       <Profile user={user} />
@@ -51,10 +53,15 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { username } = context.params as Params; // https://wallis.dev/blog/nextjs-getstaticprops-and-getstaticpaths-with-typescript
+  const { username } = context.params as Params;
   const results = await getAllUsers();
   const user = await getUser(username);
-  if (!user) return { notFound: true, revalidate: 10 };
+  if (!user) {
+    return {
+      notFound: true,
+      revalidate: 10
+    };
+  }
 
   return {
     props: {

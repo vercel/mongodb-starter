@@ -14,8 +14,9 @@ export default function Home({
     title: 'MongoDB Starter Kit',
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
-    ogUrl: 'https://mongodb.vercel.sh/'
+    ogImage:
+      'https://assets.vercel.com/image/upload/v1654311846/mongodb-demo-app_i12ysf.png',
+    ogUrl: 'https://mongodb.vercel.app'
   };
   return (
     <Layout meta={meta} results={results}>
@@ -27,6 +28,7 @@ export default function Home({
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
   const user = await getUser('steven-tey');
+
   return {
     props: {
       results,

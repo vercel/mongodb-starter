@@ -15,8 +15,9 @@ export default function Settings({
     title: 'Settings | MongoDB Starter Kit',
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
-    ogUrl: 'https://mongodb.vercel.sh/'
+    ogImage:
+      'https://assets.vercel.com/image/upload/v1654311846/mongodb-demo-app_i12ysf.png',
+    ogUrl: 'https://mongodb.vercel.app/settings'
   };
   return (
     <Layout meta={meta} results={results}>
@@ -28,13 +29,15 @@ export default function Settings({
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const results = await getAllUsers();
   const session = await getSession({ req });
-  if (!session)
+  if (!session) {
     return {
       redirect: {
         permanent: false,
         destination: '/'
       }
     };
+  }
+
   // @ts-expect-error
   const user = await getUser(session.username);
 
