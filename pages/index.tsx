@@ -10,13 +10,13 @@ export default function Home({
   results: ResultProps[];
   user: UserProps;
 }) {
+  const ogUrl = 'https://mongodb.vercel.app';
   const meta = {
     title: 'MongoDB Starter Kit',
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage:
-      'https://assets.vercel.com/image/upload/v1654311846/mongodb-demo-app_i12ysf.png',
-    ogUrl: 'https://mongodb.vercel.app'
+    ogImage: `https://api.microlink.io/?url=https://${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
+    ogUrl
   };
   return (
     <Layout meta={meta} results={results}>
