@@ -30,7 +30,7 @@ export default async function handler(
       if (result) {
         await res.unstable_revalidate(`/${username}`);
       }
-      const bioMdx = await getMdxSource(bio);
+      const bioMdx = await getMdxSource(bio); // return bioMdx to optimistically show updated state
       return res.status(200).json(bioMdx);
     } catch (e: any) {
       console.log(e);

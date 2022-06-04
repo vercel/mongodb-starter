@@ -60,7 +60,7 @@ export default function Profile({
         setData({
           ...data,
           bioMdx
-        });
+        }); // optimistically show updated state for bioMdx
         router.replace(`/${user.username}`, undefined, { shallow: true });
       } else if (response.status === 401) {
         setError('Not authorized to edit this profile.');
