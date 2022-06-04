@@ -25,8 +25,8 @@ export default function User({
     title: `${user.name}'s Profile | MongoDB Starter Kit`,
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
-    ogUrl: 'https://mongodb.vercel.sh/'
+    ogImage: 'https://mongodb.vercel.app/thumbnail.png',
+    ogUrl: 'https://mongodb.vercel.app/'
   };
   return (
     <Layout meta={meta} results={results}>

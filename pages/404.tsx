@@ -8,8 +8,8 @@ export default function Custom404() {
           title: '404 | MongoDB Starter Kit',
           description:
             'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-          ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
-          ogUrl: 'https://mongodb.vercel.sh/404'
+          ogImage: 'https://mongodb.vercel.app/thumbnail.png',
+          ogUrl: 'https://mongodb.vercel.app/404'
         }}
       />
       <h1 className="text-2xl font-light text-white">
