@@ -1,7 +1,7 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { LoadingDots } from '@/components/icons';
-import BlurImage from '../blur-image';
+import Image from 'next/image';
 import { MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 
@@ -29,7 +29,7 @@ export default function Navbar({
         (session?.user ? (
           <Link href={`/${session.username}`}>
             <a className="w-8 h-8 rounded-full overflow-hidden">
-              <BlurImage
+              <Image
                 src={
                   session.user.image ||
                   `https://avatar.tobi.sh/${session.user.name}`
@@ -37,6 +37,8 @@ export default function Navbar({
                 alt={session.user.name || 'User'}
                 width={300}
                 height={300}
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
               />
             </a>
           </Link>
