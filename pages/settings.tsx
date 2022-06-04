@@ -1,14 +1,22 @@
 import { GetServerSideProps } from 'next';
 import Layout from '@/components/layout';
 import Profile from '@/components/profile';
-import { getUser, getAllUsers, UserProps, ResultProps } from '@/lib/api/user';
+import {
+  getUser,
+  getAllUsers,
+  UserProps,
+  ResultProps,
+  getUserCount
+} from '@/lib/api/user';
 import { getSession } from 'next-auth/react';
 
 export default function Settings({
   results,
+  totalUsers,
   user
 }: {
   results: ResultProps[];
+  totalUsers: number;
   user: UserProps;
 }) {
   const ogUrl = 'https://mongodb.vercel.app/settings';
@@ -20,7 +28,7 @@ export default function Settings({
     ogUrl
   };
   return (
-    <Layout meta={meta} results={results}>
+    <Layout meta={meta} results={results} totalUsers={totalUsers}>
       <Profile settings={true} user={user} />
     </Layout>
   );
@@ -28,6 +36,7 @@ export default function Settings({
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const results = await getAllUsers();
+  const totalUsers = await getUserCount();
   const session = await getSession({ req });
   if (!session) {
     return {
@@ -44,6 +53,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       results,
+      totalUsers,
       user
     }
   };

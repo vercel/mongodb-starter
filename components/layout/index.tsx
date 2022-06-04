@@ -8,10 +8,12 @@ import Meta, { MetaProps } from './meta';
 export default function Layout({
   meta,
   results,
+  totalUsers,
   children
 }: {
   meta: MetaProps;
   results: ResultProps[];
+  totalUsers: number;
   children: ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,7 +36,7 @@ export default function Layout({
             {children}
           </main>
           <div className="hidden md:order-first h-screen md:flex md:flex-col">
-            <Directory results={results} />
+            <Directory results={results} totalUsers={totalUsers} />
           </div>
         </div>
       </div>

@@ -140,6 +140,12 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
     .toArray();
 }
 
+export async function getUserCount(): Promise<number> {
+  const client = await connectToMongo;
+  const collection = client.db('test').collection('users');
+  return await collection.countDocuments();
+}
+
 export async function updateUser(username: string, image: string, bio: string) {
   const client = await connectToMongo;
   const collection = client.db('test').collection('users');

@@ -8,7 +8,13 @@ import { useState } from 'react';
 import { CheckInCircleIcon } from '@/components/icons';
 import { DirectoryIcon, SearchIcon } from '@/components/icons';
 
-export default function Directory({ results }: { results: ResultProps[] }) {
+export default function Directory({
+  results,
+  totalUsers
+}: {
+  results: ResultProps[];
+  totalUsers: number;
+}) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
   const { data } = useSWR<ResultProps[]>(
@@ -32,7 +38,8 @@ export default function Directory({ results }: { results: ResultProps[] }) {
         </Link>
         <p className="mt-8 text-2xl text-white font-bold">Directory</p>
         <p className="mt-2 text-sm text-dark-accent-5">
-          Search directory of 3,018 employees
+          Search directory of {Intl.NumberFormat('en-us').format(totalUsers)}{' '}
+          employees
         </p>
         <form className="py-8 flex space-x-4" action="#">
           <div className="flex-1 min-w-0">

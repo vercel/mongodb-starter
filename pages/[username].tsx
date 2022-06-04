@@ -2,15 +2,23 @@ import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
 import Layout from '@/components/layout';
 import Profile from '@/components/profile';
-import { getUser, getAllUsers, UserProps, ResultProps } from '@/lib/api/user';
+import {
+  getUser,
+  getAllUsers,
+  UserProps,
+  ResultProps,
+  getUserCount
+} from '@/lib/api/user';
 import { useRouter } from 'next/router';
 import { LoadingDots } from '@/components/icons';
 
 export default function User({
   results,
+  totalUsers,
   user
 }: {
   results: ResultProps[];
+  totalUsers: number;
   user: UserProps;
 }) {
   const router = useRouter();
@@ -31,7 +39,7 @@ export default function User({
   };
 
   return (
-    <Layout meta={meta} results={results}>
+    <Layout meta={meta} results={results} totalUsers={totalUsers}>
       <Profile user={user} />
     </Layout>
   );
@@ -55,6 +63,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { username } = context.params as Params;
   const results = await getAllUsers();
+  const totalUsers = await getUserCount();
   const user = await getUser(username);
   if (!user) {
     return {
@@ -67,6 +76,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       key: username,
       results,
+      totalUsers,
       user
     },
     revalidate: 10

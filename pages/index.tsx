@@ -1,13 +1,21 @@
 import { GetStaticProps } from 'next';
 import Layout from '@/components/layout';
 import Profile from '@/components/profile';
-import { getUser, getAllUsers, ResultProps, UserProps } from '@/lib/api/user';
+import {
+  getUser,
+  getAllUsers,
+  ResultProps,
+  UserProps,
+  getUserCount
+} from '@/lib/api/user';
 
 export default function Home({
   results,
+  totalUsers,
   user
 }: {
   results: ResultProps[];
+  totalUsers: number;
   user: UserProps;
 }) {
   const ogUrl = 'https://mongodb.vercel.app';
@@ -19,7 +27,7 @@ export default function Home({
     ogUrl
   };
   return (
-    <Layout meta={meta} results={results}>
+    <Layout meta={meta} results={results} totalUsers={totalUsers}>
       <Profile user={user} settings={false} />
     </Layout>
   );
@@ -27,11 +35,13 @@ export default function Home({
 
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
+  const totalUsers = await getUserCount();
   const user = await getUser('steven-tey');
 
   return {
     props: {
       results,
+      totalUsers,
       user
     },
     revalidate: 60
