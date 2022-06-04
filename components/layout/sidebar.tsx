@@ -17,11 +17,13 @@ import { ResultProps } from '@/lib/api/user';
 export default function Sidebar({
   sidebarOpen,
   setSidebarOpen,
-  results
+  results,
+  totalUsers
 }: {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   results: ResultProps[];
+  totalUsers: number;
 }) {
   return (
     <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -73,7 +75,7 @@ export default function Sidebar({
                   </button>
                 </div>
               </Transition.Child>
-              <Directory results={results} />
+              <Directory results={results} totalUsers={totalUsers} />
             </Dialog.Panel>
           </Transition.Child>
           <div className="flex-shrink-0 w-14" aria-hidden="true">
