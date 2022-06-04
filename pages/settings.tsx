@@ -11,8 +11,15 @@ export default function Settings({
   results: ResultProps[];
   user: UserProps;
 }) {
+  const meta = {
+    title: 'Settings | MongoDB Starter Kit',
+    description:
+      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
+    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
+    ogUrl: 'https://mongodb.vercel.sh/'
+  };
   return (
-    <Layout results={results}>
+    <Layout meta={meta} results={results}>
       <Profile settings={true} user={user} />
     </Layout>
   );

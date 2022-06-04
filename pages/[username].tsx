@@ -4,6 +4,7 @@ import Layout from '@/components/layout';
 import Profile from '@/components/profile';
 import { getUser, getAllUsers, UserProps, ResultProps } from '@/lib/api/user';
 import { useRouter } from 'next/router';
+import { LoadingDots } from '@/components/icons';
 
 export default function User({
   results,
@@ -14,10 +15,21 @@ export default function User({
 }) {
   const router = useRouter();
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen w-screen flex justify-center items-center bg-black">
+        <LoadingDots color="white" />
+      </div>
+    );
   }
+  const meta = {
+    title: `${user.name}'s Profile | MongoDB Starter Kit`,
+    description:
+      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
+    ogImage: 'https://mongodb.vercel.sh/thumbnail.png',
+    ogUrl: 'https://mongodb.vercel.sh/'
+  };
   return (
-    <Layout results={results}>
+    <Layout meta={meta} results={results}>
       <Profile user={user} />
     </Layout>
   );

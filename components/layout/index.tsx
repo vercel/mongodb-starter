@@ -3,11 +3,14 @@ import Sidebar from './sidebar';
 import Navbar from './navbar';
 import Directory from './directory';
 import { ResultProps } from '@/lib/api/user';
+import Meta, { MetaProps } from './meta';
 
 export default function Layout({
+  meta,
   results,
   children
 }: {
+  meta: MetaProps;
   results: ResultProps[];
   children: ReactNode;
 }) {
@@ -15,6 +18,7 @@ export default function Layout({
 
   return (
     <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">
+      <Meta props={meta} />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}

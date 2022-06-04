@@ -35,7 +35,6 @@ export default function Profile({
   });
   const [error, setError] = useState('');
   const router = useRouter();
-  console.log(router);
   const settingsPage =
     settings ||
     (router.query.settings === 'true' && router.asPath === '/settings');
