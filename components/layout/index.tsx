@@ -25,6 +25,7 @@ export default function Layout({
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         results={results}
+        totalUsers={totalUsers}
       />
 
       <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
