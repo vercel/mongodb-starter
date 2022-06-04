@@ -21,7 +21,7 @@ export default function Directory({ results }: { results: ResultProps[] }) {
   );
 
   return (
-    <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-[#333333]">
+    <aside className="flex-shrink-0 w-full bg-black sm:w-96 h-full overflow-scroll border-r border-gray-800">
       <div className="px-6 pt-6 pb-0 sticky top-0 bg-black z-20">
         <Link href="/">
           <a>

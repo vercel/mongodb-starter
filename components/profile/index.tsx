@@ -124,7 +124,7 @@ export default function Profile({
                   href={`https://github.com/${user.username}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
+                  className="inline-flex justify-center px-4 py-2 border border-gray-800 hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
                 >
                   <GitHubIcon className="mr-3 h-5 w-5 text-white" />
                   <span>View GitHub Profile</span>
@@ -136,7 +136,7 @@ export default function Profile({
                   href="https://github.com/vercel/mongodb-starter"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex justify-center px-4 py-2 border border-[#333333] hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
+                  className="inline-flex justify-center px-4 py-2 border border-gray-800 hover:border-white shadow-sm text-sm font-medium rounded-md text-white font-mono bg-black focus:outline-none focus:ring-0 transition-all"
                 >
                   <GitHubIcon className="mr-3 h-5 w-5 text-white" />
                   <span>Demo Account</span>
@@ -149,7 +149,7 @@ export default function Profile({
 
       {/* Tabs */}
       <div className="mt-6 sm:mt-2 2xl:mt-5">
-        <div className="border-b border-[#333333]">
+        <div className="border-b border-gray-800">
           <div className={`${profileWidth} mt-10`}>
             <nav className="-mb-px flex space-x-8" aria-label="Tabs">
               {tabs.map((tab) => (
@@ -184,7 +184,7 @@ export default function Profile({
                   bio: (e.target as HTMLTextAreaElement).value
                 });
               }}
-              className="mt-1 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-[#333333] focus:border-white resize-none focus:outline-none focus:ring-0"
+              className="mt-1 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-gray-800 focus:border-white resize-none focus:outline-none focus:ring-0"
               placeholder="No description provided."
               value={data.bio}
             />
@@ -219,7 +219,7 @@ export default function Profile({
             )}
           </button>
           <Link href={`/${user.username}`} shallow replace scroll={false}>
-            <a className="rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+            <a className="rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
               <XIcon className="h-4 w-4 text-white" />
             </a>
           </Link>
@@ -232,7 +232,7 @@ export default function Profile({
           replace
           scroll={false}
         >
-          <a className="fixed bottom-10 right-10 rounded-full border border-[#333333] hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+          <a className="fixed bottom-10 right-10 rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
             <EditIcon className="h-4 w-4 text-white" />
           </a>
         </Link>
