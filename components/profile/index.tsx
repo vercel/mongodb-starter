@@ -200,7 +200,7 @@ export default function Profile({
             </div>
           </>
         ) : (
-          <article className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono prose prose-headings:text-white">
+          <article className="mt-3 max-w-2xl text-sm tracking-wider leading-6 text-white font-mono prose prose-headings:text-white prose-a:text-white">
             <MDXRemote {...data.bioMdx} />
           </article>
         )}
