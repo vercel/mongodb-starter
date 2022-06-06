@@ -2,11 +2,12 @@ import { GetStaticProps } from 'next';
 import Layout from '@/components/layout';
 import Profile from '@/components/profile';
 import {
-  getUser,
   getAllUsers,
   ResultProps,
   UserProps,
-  getUserCount
+  getUserCount,
+  placeholderBio,
+  getMdxSource
 } from '@/lib/api/user';
 
 export default function Home({
@@ -36,13 +37,16 @@ export default function Home({
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
   const totalUsers = await getUserCount();
-  const user = await getUser('steven-tey');
+  const firstUser = {
+    ...results[0].users[0],
+    bioMdx: await getMdxSource(placeholderBio)
+  };
 
   return {
     props: {
       results,
       totalUsers,
-      user
+      user: firstUser
     },
     revalidate: 60
   };
