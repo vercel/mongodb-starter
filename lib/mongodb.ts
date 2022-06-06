@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const databaseUrl = process.env.DATABASE_URL as string;
+const databaseUrl = process.env.MONGODB_URI as string;
 const options = {};
 
 let client;
@@ -10,7 +10,7 @@ declare global {
   var _mongoClientPromise: Promise<any>;
 }
 
-if (!process.env.DATABASE_URL) {
+if (!process.env.MONGODB_URI) {
   throw new Error('Please add your Atlas database URL to .env or .env.local');
 }
 
