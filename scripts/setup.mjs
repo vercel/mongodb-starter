@@ -25,7 +25,7 @@ const main = async () => {
       const [fName, lName] = faker.name.findName().split(' ');
       const username = faker.internet.userName(fName, lName);
       const email = faker.internet.email(fName, lName);
-      const image = faker.image.people();
+      const image = faker.image.people(640, 480, true);
 
       return {
         name: `${fName} ${lName}`,
