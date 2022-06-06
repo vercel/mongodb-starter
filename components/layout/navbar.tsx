@@ -14,7 +14,7 @@ export default function Navbar({
   const [loading, setLoading] = useState(false);
   return (
     <nav
-      className="absolute right-0 w-full flex items-center justify-between md:justify-end px-4 h-12 sm:px-6 lg:px-8"
+      className="absolute right-0 w-full flex items-center justify-between md:justify-end px-4 h-16"
       aria-label="Navbar"
     >
       <button
