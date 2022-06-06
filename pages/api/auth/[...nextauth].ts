@@ -4,7 +4,9 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from 'lib/mongodb';
 
 if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
-  throw new Error('GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET must be set');
+  throw new Error(
+    'GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET must be set. Read more: https://next-auth.js.org/providers/github'
+  );
 }
 
 export default NextAuth({
