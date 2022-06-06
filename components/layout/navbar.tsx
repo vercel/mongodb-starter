@@ -4,6 +4,7 @@ import { LoadingDots } from '@/components/icons';
 import Image from 'next/image';
 import { MenuIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
+import { useModal } from '@/components/modal/use-modal';
 
 export default function Navbar({
   setSidebarOpen
@@ -12,6 +13,8 @@ export default function Navbar({
 }) {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
+  const { setShowWarningModal } = useModal();
+
   return (
     <nav
       className="absolute right-0 w-full flex items-center justify-between md:justify-end px-4 h-16"
@@ -47,7 +50,15 @@ export default function Navbar({
             disabled={loading}
             onClick={() => {
               setLoading(true);
-              signIn('github');
+              if (
+                !process.env.GITHUB_CLIENT_ID ||
+                !process.env.GITHUB_CLIENT_SECRET
+              ) {
+                setShowWarningModal(true);
+                setLoading(false);
+              } else {
+                signIn('github');
+              }
             }}
             className={`${
               loading
