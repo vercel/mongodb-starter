@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.1.0",
+    "@types/js-cookie": "^3.0.2",
     "autoprefixer": "^10.4.4",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
