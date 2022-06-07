@@ -16,7 +16,7 @@ export default function Layout({
   meta: MetaProps;
   results: ResultProps[];
   totalUsers: number;
-  username: string;
+  username?: string;
   children: ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
