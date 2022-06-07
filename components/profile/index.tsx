@@ -1,5 +1,5 @@
 import { UserProps } from '@/lib/api/user';
-import { getGradient } from '@/lib/utils';
+import { getGradient } from '@/lib/gradients';
 import {
   CheckInCircleIcon,
   CheckIcon,

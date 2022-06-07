@@ -1,4 +1,4 @@
-import { getGradient } from '@/lib/utils';
+import { getGradient } from '@/lib/gradients';
 
 export default function Toast({ username }: { username?: string }) {
   return (
