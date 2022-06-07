@@ -8,6 +8,7 @@ import {
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
+import Toast from '@/components/layout/toast';
 
 export default function Home({
   results,
@@ -27,7 +28,12 @@ export default function Home({
     ogUrl
   };
   return (
-    <Layout meta={meta} results={results} totalUsers={totalUsers}>
+    <Layout
+      meta={meta}
+      results={results}
+      totalUsers={totalUsers}
+      username={user.username}
+    >
       <Profile user={user} settings={false} />
     </Layout>
   );

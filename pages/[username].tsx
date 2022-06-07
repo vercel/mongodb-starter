@@ -39,7 +39,12 @@ export default function User({
   };
 
   return (
-    <Layout meta={meta} results={results} totalUsers={totalUsers}>
+    <Layout
+      meta={meta}
+      results={results}
+      totalUsers={totalUsers}
+      username={user.username}
+    >
       <Profile user={user} />
     </Layout>
   );

@@ -4,16 +4,19 @@ import Navbar from './navbar';
 import Directory from './directory';
 import { ResultProps } from '@/lib/api/user';
 import Meta, { MetaProps } from './meta';
+import Toast from '@/components/layout/toast';
 
 export default function Layout({
   meta,
   results,
   totalUsers,
+  username,
   children
 }: {
   meta: MetaProps;
   results: ResultProps[];
   totalUsers: number;
+  username: string;
   children: ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,6 +24,7 @@ export default function Layout({
   return (
     <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">
       <Meta props={meta} />
+      <Toast username={username} />
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
