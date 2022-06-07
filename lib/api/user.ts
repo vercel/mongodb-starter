@@ -58,6 +58,25 @@ export async function getUser(username: string): Promise<UserProps | null> {
   }
 }
 
+export async function getFirstUser(): Promise<UserProps | null> {
+  const client = await connectToMongo;
+  const collection = client.db('test').collection('users');
+  const results = await collection.findOne(
+    {},
+    {
+      projection: { _id: 0, emailVerified: 0 }
+    }
+  );
+  if (results) {
+    return {
+      ...results,
+      bioMdx: await getMdxSource(results.bio || placeholderBio)
+    };
+  } else {
+    return null;
+  }
+}
+
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {
   const client = await connectToMongo;
   const collection = client.db('test').collection('users');

@@ -6,8 +6,7 @@ import {
   ResultProps,
   UserProps,
   getUserCount,
-  placeholderBio,
-  getMdxSource
+  getFirstUser
 } from '@/lib/api/user';
 
 export default function Home({
@@ -37,7 +36,7 @@ export default function Home({
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
   const totalUsers = await getUserCount();
-  const firstUser = results[0].users[0];
+  const firstUser = await getFirstUser();
 
   return {
     props: {
