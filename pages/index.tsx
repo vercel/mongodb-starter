@@ -8,7 +8,7 @@ import {
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
-import Toast from '@/components/layout/toast';
+import connectToMongo from '@/lib/mongodb';
 
 export default function Home({
   results,
@@ -40,6 +40,14 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+  let isClusterReady = false;
+  try {
+    await connectToMongo;
+    isClusterReady = true;
+  } catch (e) {
+    console.error(e);
+  }
+
   const results = await getAllUsers();
   const totalUsers = await getUserCount();
   const firstUser = await getFirstUser();
@@ -48,7 +56,8 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       results,
       totalUsers,
-      user: firstUser
+      user: firstUser,
+      isClusterReady
     },
     revalidate: 60
   };
