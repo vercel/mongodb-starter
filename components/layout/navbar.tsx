@@ -50,23 +50,23 @@ export default function Navbar({
             disabled={loading}
             onClick={() => {
               setLoading(true);
-              if (
-                !process.env.GITHUB_CLIENT_ID ||
-                !process.env.GITHUB_CLIENT_SECRET
-              ) {
-                setShowWarningModal(true);
-                setLoading(false);
-              } else {
-                signIn('github');
-              }
+              //   if (
+              //     !process.env.GITHUB_CLIENT_ID ||
+              //     !process.env.GITHUB_CLIENT_SECRET
+              //   ) {
+              //     setShowWarningModal(true);
+              //     setLoading(false);
+              //   } else {
+              signIn('github');
+              //   }
             }}
             className={`${
               loading
                 ? 'bg-gray-200 border-gray-300'
                 : 'bg-black hover:bg-white border-black'
-            } w-16 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
+            } w-36 h-8 py-1 text-white hover:text-black border rounded-md text-sm transition-all`}
           >
-            {loading ? <LoadingDots color="gray" /> : 'Log In'}
+            {loading ? <LoadingDots color="gray" /> : 'Log in with GitHub'}
           </button>
         ))}
     </nav>
