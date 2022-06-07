@@ -37,10 +37,7 @@ export default function Home({
 export const getStaticProps: GetStaticProps = async () => {
   const results = await getAllUsers();
   const totalUsers = await getUserCount();
-  const firstUser = {
-    ...results[0].users[0],
-    bioMdx: await getMdxSource(placeholderBio)
-  };
+  const firstUser = results[0].users[0];
 
   return {
     props: {
