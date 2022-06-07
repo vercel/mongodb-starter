@@ -23,7 +23,7 @@ export default function Home({
     title: 'MongoDB Starter Kit',
     description:
       'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: `https://api.microlink.io/?url=${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
+    ogImage: `https://mongodb.vercel.app/thumbnail.png`,
     ogUrl
   };
   return (
