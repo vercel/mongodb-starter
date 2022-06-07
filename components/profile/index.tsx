@@ -178,7 +178,7 @@ export default function Profile({
 
       {/* Bio */}
       <div className={`${profileWidth} mt-16`}>
-        <h2 className="font-semibold text-lg text-white">Bio</h2>
+        <h2 className="font-semibold font-mono text-2xl text-white">Bio</h2>
         {settingsPage ? (
           <>
             <TextareaAutosize
