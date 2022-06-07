@@ -5,9 +5,9 @@ export default function Toast({ username }: { username?: string }) {
     <div
       className={`rounded-[16px] ${getGradient(
         username
-      )} w-[581px] h-[80px] p-0.5 absolute z-10 bottom-10 left-10`}
+      )} w-11/12 sm:w-[581px] h-[120px] sm:h-[80px] p-0.5 absolute z-10 bottom-10 left-0 sm:left-10 right-0 sm:right-auto mx-auto`}
     >
-      <div className="rounded-[16px] w-full h-full bg-[#111111] flex items-center justify-between px-5">
+      <div className="rounded-[16px] w-full h-full bg-[#111111] flex flex-col sm:flex-row items-center justify-center sm:justify-between space-y-2 sm:space-y-0 px-5">
         <p className="text-white text-[13px] font-mono w-[304px] h-[40px] flex items-center justify-center p-3">
           Duplicate this template and deploy it to your favorite git provider
         </p>
