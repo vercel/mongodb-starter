@@ -9,15 +9,18 @@ import {
   getFirstUser
 } from '@/lib/api/user';
 import connectToMongo from '@/lib/mongodb';
+import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 
 export default function Home({
   results,
   totalUsers,
-  user
+  user,
+  isClusterReady
 }: {
   results: ResultProps[];
   totalUsers: number;
   user: UserProps;
+  isClusterReady: boolean;
 }) {
   const ogUrl = 'https://mongodb.vercel.app';
   const meta = {
@@ -27,6 +30,10 @@ export default function Home({
     ogImage: `https://mongodb.vercel.app/og.png`,
     ogUrl
   };
+
+  if (!isClusterReady) {
+    return <ClusterProvisioning />;
+  }
   return (
     <Layout
       meta={meta}
@@ -46,6 +53,14 @@ export const getStaticProps: GetStaticProps = async () => {
     isClusterReady = true;
   } catch (e) {
     console.error(e);
+    return {
+      props: {
+        results: [],
+        totalUsers: 0,
+        user: null,
+        isClusterReady: false
+      }
+    };
   }
 
   const results = await getAllUsers();

@@ -48,7 +48,7 @@ const main = async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    await client.close();
+    if (client) await client.close();
   }
 };
 
