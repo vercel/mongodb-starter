@@ -11,7 +11,7 @@ export default function Custom404() {
           description:
             'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
           ogImage:
-            'https://assets.vercel.com/image/upload/v1654311846/mongodb-demo-app_i12ysf.png',
+            'https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png',
           ogUrl: 'https://mongodb.vercel.app/404'
         }}
       />
