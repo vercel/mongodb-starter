@@ -2,6 +2,8 @@
 
 A serverless application built on [Next.js](https://nextjs.org/) and [MongoDB Atlas](https://www.mongodb.com/atlas/database), deployed on [Vercel](https://vercel.com/) with the [Vercel + MongoDB integration](https://vercel.com/integrations/mongodbatlas).
 
+![](/public/thumbnail.png)
+
 Featured on the [MongoDB World](https://www.mongodb.com/world-2022) keynote.
 
 ### Demo
