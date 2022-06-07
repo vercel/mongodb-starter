@@ -67,14 +67,10 @@ export async function getFirstUser(): Promise<UserProps | null> {
       projection: { _id: 0, emailVerified: 0 }
     }
   );
-  if (results) {
-    return {
-      ...results,
-      bioMdx: await getMdxSource(results.bio || placeholderBio)
-    };
-  } else {
-    return null;
-  }
+  return {
+    ...results,
+    bioMdx: await getMdxSource(results.bio || placeholderBio)
+  };
 }
 
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {
