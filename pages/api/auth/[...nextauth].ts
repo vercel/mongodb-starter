@@ -3,8 +3,10 @@ import GitHubProvider from 'next-auth/providers/github';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import connectToMongo from 'lib/mongodb';
 
+const connection = connectToMongo();
+
 export default NextAuth({
-  adapter: MongoDBAdapter(connectToMongo()),
+  adapter: MongoDBAdapter(connection),
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
