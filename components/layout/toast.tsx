@@ -18,7 +18,7 @@ export default function Toast({ username }: { username?: string }) {
       >
         <div className="rounded-[14px] w-full h-full bg-[#111111] flex flex-col sm:flex-row items-center justify-center sm:justify-between space-y-3 sm:space-y-0 px-5">
           <p className="text-white text-[13px] font-mono w-[304px] h-[40px] flex items-center justify-center p-3">
-            Get started with MongoDB Atlas and Vercel instanly.{' '}
+            Get started with MongoDB Atlas and Vercel instantly.{' '}
             <button
               className="contents underline text-blue-400 font-bold"
               onClick={() => {
