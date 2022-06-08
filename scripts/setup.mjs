@@ -4,10 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const client = new MongoClient(process.env.MONGODB_URI);
-
 const setup = async () => {
+  let client;
+
   try {
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
 
     const hasData = await client
@@ -46,16 +47,18 @@ const setup = async () => {
       console.log('Successfully inserted records');
     }
   } catch (error) {
-    console.log(error);
     return 'MongoDB Database is not ready yet';
   } finally {
-    if (client) await client.close();
+    if (client) {
+      await client.close();
+    }
   }
 };
 
-setup().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+try {
+  setup();
+} catch {
+  console.warn('MongoDB Database is not ready yet. Skipping seeding...');
+}
 
 export { setup };
