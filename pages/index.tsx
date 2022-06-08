@@ -55,15 +55,20 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         results,
         totalUsers,
-        user: firstUser
+        user: firstUser,
+        isClusterReady: true
       },
       revalidate: 60
     };
   } catch (e) {
     return {
       props: {
+        results: [],
+        totalUsers: 0,
+        user: {},
         isClusterReady: false
-      }
+      },
+      revalidate: 60
     };
   }
 };

@@ -1,6 +1,5 @@
-import { LoadingDots } from '@/components/icons';
+import { LoadingDots, AlertCircleIcon } from '@/components/icons';
 import { MouseEvent, useState } from 'react';
-import AlertCircleIcon from '../icons/alert-circle';
 
 export default function ClusterProvisioning() {
   const [isSubmitting, setIsSubmitting] = useState(false);
