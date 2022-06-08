@@ -4,10 +4,9 @@ const databaseUrl = process.env.MONGODB_URI as string;
 const options = {};
 
 let client;
-let connection: Promise<any>;
 
 declare global {
-  var _connection: Promise<any>;
+  var _connection: Promise<MongoClient>;
 }
 
 if (!process.env.MONGODB_URI) {
@@ -15,22 +14,12 @@ if (!process.env.MONGODB_URI) {
 }
 
 const connectToMongo = () => {
-  if (process.env.NODE_ENV === 'development') {
-    // In development mode, use a global variable so that the value
-    // is preserved across module reloads caused by HMR (Hot Module Replacement).
-    if (!global._connection) {
-      client = new MongoClient(databaseUrl, options);
-      global._connection = client.connect();
-    }
-    connection = global._connection;
-  } else {
-    if (!connection) {
-      client = new MongoClient(databaseUrl, options);
-      connection = client.connect();
-    }
+  if (!global._connection) {
+    client = new MongoClient(databaseUrl, options);
+    global._connection = client.connect();
   }
 
-  return connection;
+  return global._connection;
 };
 
 export default connectToMongo;
