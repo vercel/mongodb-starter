@@ -24,9 +24,10 @@ const connectToMongo = () => {
     }
     connection = global._connection;
   } else {
-    // In production mode, it's best to not use a global variable.
-    client = new MongoClient(databaseUrl, options);
-    connection = client.connect();
+    if (!connection) {
+      client = new MongoClient(databaseUrl, options);
+      connection = client.connect();
+    }
   }
 
   return connection;
