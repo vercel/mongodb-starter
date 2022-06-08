@@ -47,7 +47,7 @@ const setup = async () => {
       console.log('Successfully inserted records');
     }
   } catch (error) {
-    return 'MongoDB Database is not ready yet';
+    return 'Database is not ready yet';
   } finally {
     if (client) {
       await client.close();
@@ -58,7 +58,7 @@ const setup = async () => {
 try {
   setup();
 } catch {
-  console.warn('MongoDB Database is not ready yet. Skipping seeding...');
+  console.warn('Database is not ready yet. Skipping seeding...');
 }
 
 export { setup };

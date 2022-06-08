@@ -8,7 +8,6 @@ import {
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
-import connectToMongo from '@/lib/mongodb';
 import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 
 export default function Home({
@@ -47,10 +46,19 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  let isClusterReady = false;
   try {
-    await connectToMongo;
-    isClusterReady = true;
+    const results = await getAllUsers();
+    const totalUsers = await getUserCount();
+    const firstUser = await getFirstUser();
+
+    return {
+      props: {
+        results,
+        totalUsers,
+        user: firstUser
+      },
+      revalidate: 60
+    };
   } catch (e) {
     return {
       props: {
@@ -58,17 +66,4 @@ export const getStaticProps: GetStaticProps = async () => {
       }
     };
   }
-
-  const results = await getAllUsers();
-  const totalUsers = await getUserCount();
-  const firstUser = await getFirstUser();
-
-  return {
-    props: {
-      results,
-      totalUsers,
-      user: firstUser
-    },
-    revalidate: 60
-  };
 };

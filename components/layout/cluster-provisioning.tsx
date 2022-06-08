@@ -43,7 +43,7 @@ export default function ClusterProvisioning() {
         </button>
 
         {error && (
-          <div className="mt-4 text-red-500 text-sm flex items-center space-x-2">
+          <div className="mt-4 text-red-500 text-sm flex items-center space-x-1">
             <AlertCircleIcon className="w-4 h-4" />
             <p>
               <span className="font-bold">Error: </span>
