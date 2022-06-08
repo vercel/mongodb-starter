@@ -52,12 +52,8 @@ export const getStaticProps: GetStaticProps = async () => {
     await connectToMongo;
     isClusterReady = true;
   } catch (e) {
-    console.error(e);
     return {
       props: {
-        results: [],
-        totalUsers: 0,
-        user: null,
         isClusterReady: false
       }
     };
@@ -71,8 +67,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       results,
       totalUsers,
-      user: firstUser,
-      isClusterReady
+      user: firstUser
     },
     revalidate: 60
   };
