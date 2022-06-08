@@ -6,7 +6,7 @@ const options = {};
 let client;
 
 declare global {
-  var _connection: Promise<MongoClient>;
+  var _connection: Promise<any>;
 }
 
 if (!process.env.MONGODB_URI) {
