@@ -4,18 +4,19 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const client = new MongoClient(process.env.MONGODB_URI);
+const setup = async () => {
+  let client;
 
-const main = async () => {
   try {
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
 
-    const numUsers = await client
+    const hasData = await client
       .db('test')
       .collection('users')
       .countDocuments();
 
-    if (numUsers) {
+    if (hasData) {
       console.log('Database already exists with data');
       client.close();
       return;
@@ -37,20 +38,27 @@ const main = async () => {
       };
     });
 
-    const test = await client
+    const insert = await client
       .db('test')
       .collection('users')
       .insertMany(records);
 
-    if (test.acknowledged) {
+    if (insert.acknowledged) {
       console.log('Successfully inserted records');
     }
+  } catch (error) {
+    return 'Database is not ready yet';
   } finally {
-    await client.close();
+    if (client) {
+      await client.close();
+    }
   }
 };
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+try {
+  setup();
+} catch {
+  console.warn('Database is not ready yet. Skipping seeding...');
+}
+
+export { setup };

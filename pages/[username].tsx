@@ -55,14 +55,21 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticPaths = async () => {
-  const results = await getAllUsers();
-  const paths = results.flatMap(({ users }) =>
-    users.map((user) => ({ params: { username: user.username } }))
-  );
-  return {
-    paths,
-    fallback: true
-  };
+  try {
+    const results = await getAllUsers();
+    const paths = results.flatMap(({ users }) =>
+      users.map((user) => ({ params: { username: user.username } }))
+    );
+    return {
+      paths,
+      fallback: true
+    };
+  } catch (e) {
+    return {
+      paths: [],
+      fallback: false
+    };
+  }
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {

@@ -42,7 +42,7 @@ Tincidunt quam neque in cursus viverra orci, dapibus nec tristique. Nullam ut si
 Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris amet. Urna, sem pretium sit pretium urna, senectus vitae. Scelerisque fermentum, cursus felis dui suspendisse velit pharetra. Augue et duis cursus maecenas eget quam lectus. Accumsan vitae nascetur pharetra rhoncus praesent dictum risus suspendisse.`;
 
 export async function getUser(username: string): Promise<UserProps | null> {
-  const client = await connectToMongo;
+  const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   const results = await collection.findOne(
     { username },
@@ -59,7 +59,7 @@ export async function getUser(username: string): Promise<UserProps | null> {
 }
 
 export async function getFirstUser(): Promise<UserProps | null> {
-  const client = await connectToMongo;
+  const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   const results = await collection.findOne(
     {},
@@ -74,7 +74,7 @@ export async function getFirstUser(): Promise<UserProps | null> {
 }
 
 export async function getAllUsers(search?: string): Promise<ResultProps[]> {
-  const client = await connectToMongo;
+  const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   return await collection
     .aggregate([
@@ -156,13 +156,13 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
 }
 
 export async function getUserCount(): Promise<number> {
-  const client = await connectToMongo;
+  const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   return await collection.countDocuments();
 }
 
 export async function updateUser(username: string, image: string, bio: string) {
-  const client = await connectToMongo;
+  const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   return await collection.updateOne({ username }, { $set: { image, bio } });
 }

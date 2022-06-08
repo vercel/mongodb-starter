@@ -8,16 +8,18 @@ import {
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
-import Toast from '@/components/layout/toast';
+import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 
 export default function Home({
   results,
   totalUsers,
-  user
+  user,
+  isClusterReady
 }: {
   results: ResultProps[];
   totalUsers: number;
   user: UserProps;
+  isClusterReady: boolean;
 }) {
   const ogUrl = 'https://mongodb.vercel.app';
   const meta = {
@@ -27,6 +29,10 @@ export default function Home({
     ogImage: `https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png`,
     ogUrl
   };
+
+  if (!isClusterReady) {
+    return <ClusterProvisioning />;
+  }
   return (
     <Layout
       meta={meta}
@@ -40,16 +46,29 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const results = await getAllUsers();
-  const totalUsers = await getUserCount();
-  const firstUser = await getFirstUser();
+  try {
+    const results = await getAllUsers();
+    const totalUsers = await getUserCount();
+    const firstUser = await getFirstUser();
 
-  return {
-    props: {
-      results,
-      totalUsers,
-      user: firstUser
-    },
-    revalidate: 60
-  };
+    return {
+      props: {
+        results,
+        totalUsers,
+        user: firstUser,
+        isClusterReady: true
+      },
+      revalidate: 60
+    };
+  } catch (e) {
+    return {
+      props: {
+        results: [],
+        totalUsers: 0,
+        user: {},
+        isClusterReady: false
+      },
+      revalidate: 60
+    };
+  }
 };

@@ -47,8 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
-  // @ts-expect-error
-  const user = await getUser(session.username);
+  const user = await getUser(session.username as string);
 
   return {
     props: {
