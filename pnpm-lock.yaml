@@ -7,12 +7,14 @@ specifiers:
   '@next-auth/mongodb-adapter': ^1.0.3
   '@tailwindcss/forms': ^0.5.2
   '@tailwindcss/typography': ^0.5.2
+  '@types/js-cookie': ^3.0.2
   '@types/node': ^17.0.21
   '@types/react': ^18.0.11
   autoprefixer: ^10.4.4
   dotenv: ^16.0.1
   eslint: 8.17.0
   eslint-config-next: 12.1.6
+  js-cookie: ^3.0.1
   mongodb: ^4.6.0
   next: 12.1.6
   next-auth: ^4.3.1
@@ -36,6 +38,7 @@ dependencies:
   '@types/node': 17.0.39
   '@types/react': 18.0.11
   dotenv: 16.0.1
+  js-cookie: 3.0.1
   mongodb: 4.6.0
   next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
   next-auth: 4.3.4_ef5jwxihqo6n7gxfmzogljlgcm
@@ -49,6 +52,7 @@ dependencies:
 
 devDependencies:
   '@faker-js/faker': 7.1.0
+  '@types/js-cookie': 3.0.2
   autoprefixer: 10.4.7_postcss@8.4.14
   eslint: 8.17.0
   eslint-config-next: 12.1.6_qwqcuvhue6diaz4jqbkm5dp3pa
@@ -354,6 +358,10 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
     dev: false
+
+  /@types/js-cookie/3.0.2:
+    resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
+    dev: true
 
   /@types/js-yaml/4.0.5:
     resolution: {integrity: sha512-FhpRzf927MNQdRZP0J5DLIdTXhjLYzeUTmLAu69mnVksLH9CJY3IuSeEgbKUki7GQZm0WqDkGzyxju2EZGD2wA==}
@@ -1669,6 +1677,11 @@ packages:
 
   /jose/4.8.1:
     resolution: {integrity: sha512-+/hpTbRcCw9YC0TOfN1W47pej4a9lRmltdOVdRLz5FP5UvUq3CenhXjQK7u/8NdMIIShMXYAh9VLPhc7TjhvFw==}
+    dev: false
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
     dev: false
 
   /js-tokens/4.0.0:
