@@ -15,8 +15,11 @@ if (!process.env.MONGODB_URI) {
 
 const connectToMongo = () => {
   if (!global._connection) {
+    console.log('Creating connection...');
     client = new MongoClient(databaseUrl, options);
     global._connection = client.connect();
+  } else {
+    console.log('Reusing connection...');
   }
 
   return global._connection;
