@@ -130,7 +130,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
       {
         $group: {
           _id: {
-            $toLower: { $substr: ['$name', 0, 1] }
+            $toLower: { $substrCP: ['$name', 0, 1] }
           },
           users: {
             $push: {
