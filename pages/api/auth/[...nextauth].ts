@@ -30,6 +30,5 @@ export default NextAuth({
       session.username = user.username;
       return session;
     }
-  },
-  secret: process.env.SECRET
+  }
 });
