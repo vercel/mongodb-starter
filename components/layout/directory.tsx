@@ -74,7 +74,7 @@ export default function Directory({
               <div className="bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
                 <h3>{letter}</h3>
               </div>
-              <ul role="list" className="relative z-0">
+              <ul role="list" className="relative z-0 directory-divide-y">
                 {users.map((user) => (
                   <li key={user.username}>
                     <Link href={`/${user.username}`}>
@@ -108,7 +108,6 @@ export default function Directory({
                               @{user.username}
                             </p>
                           </div>
-                          <div className="w-full left-3 bg-dark-accent-2 bottom-0 h-[1px] absolute" />
                         </div>
                       </a>
                     </Link>
