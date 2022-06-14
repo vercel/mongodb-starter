@@ -11,38 +11,16 @@ import {
 import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 
 export default function Home({
-  results,
-  totalUsers,
   user,
   isClusterReady
 }: {
-  results: ResultProps[];
-  totalUsers: number;
   user: UserProps;
   isClusterReady: boolean;
 }) {
-  const ogUrl = 'https://mongodb.vercel.app';
-  const meta = {
-    title: 'MongoDB Starter Kit',
-    description:
-      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: `https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png`,
-    ogUrl
-  };
-
   if (!isClusterReady) {
     return <ClusterProvisioning />;
   }
-  return (
-    <Layout
-      meta={meta}
-      results={results}
-      totalUsers={totalUsers}
-      username={user.username}
-    >
-      <Profile user={user} settings={false} />
-    </Layout>
-  );
+  return <Profile user={user} settings={false} />;
 }
 
 export const getStaticProps: GetStaticProps = async () => {

@@ -7,19 +7,25 @@ import Meta, { MetaProps } from './meta';
 import Toast from '@/components/layout/toast';
 
 export default function Layout({
-  meta,
   results,
   totalUsers,
   username,
   children
 }: {
-  meta: MetaProps;
   results: ResultProps[];
   totalUsers: number;
   username?: string;
   children: ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const ogUrl = 'https://mongodb.vercel.app';
+  const meta = {
+    title: 'MongoDB Starter Kit',
+    description:
+      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
+    ogImage: `https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png`,
+    ogUrl
+  };
 
   return (
     <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">

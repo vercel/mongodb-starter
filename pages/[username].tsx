@@ -13,8 +13,6 @@ import { useRouter } from 'next/router';
 import { LoadingDots } from '@/components/icons';
 
 export default function User({
-  results,
-  totalUsers,
   user
 }: {
   results: ResultProps[];
@@ -29,25 +27,16 @@ export default function User({
       </div>
     );
   }
-  const ogUrl = `https://mongodb.vercel.app/${user.username}`;
-  const meta = {
-    title: `${user.name}'s Profile | MongoDB Starter Kit`,
-    description:
-      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: `https://api.microlink.io/?url=${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
-    ogUrl
-  };
+  // const ogUrl = `https://mongodb.vercel.app/${user.username}`;
+  // const meta = {
+  //   title: `${user.name}'s Profile | MongoDB Starter Kit`,
+  //   description:
+  //     'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
+  //   ogImage: `https://api.microlink.io/?url=${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
+  //   ogUrl
+  // };
 
-  return (
-    <Layout
-      meta={meta}
-      results={results}
-      totalUsers={totalUsers}
-      username={user.username}
-    >
-      <Profile user={user} />
-    </Layout>
-  );
+  return <Profile user={user} />;
 }
 
 interface Params extends ParsedUrlQuery {
@@ -86,7 +75,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      key: username,
       results,
       totalUsers,
       user
