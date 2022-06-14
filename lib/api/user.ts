@@ -89,27 +89,21 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
                       autocomplete: {
                         query: search,
                         path: 'name',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
+                        fuzzy: {}
                       }
                     },
                     {
                       autocomplete: {
                         query: search,
                         path: 'username',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
+                        fuzzy: {}
                       }
                     },
                     {
                       autocomplete: {
                         query: search,
                         path: 'email',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
+                        fuzzy: {}
                       }
                     }
                   ]
@@ -125,7 +119,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
         }
       },
       {
-        $limit: 50
+        $limit: 100
       },
       {
         $group: {
