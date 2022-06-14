@@ -41,6 +41,17 @@ export default function ClusterProvisioning() {
           {isSubmitting ? <LoadingDots color="white" /> : 'Seed Database'}
         </button>
 
+        <div className="text-center">
+          <a
+            href="https://cloud.mongodb.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-xs text-gray-400 hover:text-white hover:underline transition-all"
+          >
+            Check cluster status
+          </a>
+        </div>
+
         {error && (
           <div className="mt-4 text-red-500 text-sm flex items-center space-x-1">
             <AlertCircleIcon className="w-4 h-4" />

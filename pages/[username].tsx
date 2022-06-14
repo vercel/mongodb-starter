@@ -1,54 +1,9 @@
 import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
-import Layout from '@/components/layout';
+import { defaultMetaProps } from '@/components/layout/meta';
 import Profile from '@/components/profile';
-import {
-  getUser,
-  getAllUsers,
-  UserProps,
-  ResultProps,
-  getUserCount
-} from '@/lib/api/user';
-import { useRouter } from 'next/router';
-import { LoadingDots } from '@/components/icons';
-
-export default function User({
-  results,
-  totalUsers,
-  user
-}: {
-  results: ResultProps[];
-  totalUsers: number;
-  user: UserProps;
-}) {
-  const router = useRouter();
-  if (router.isFallback) {
-    return (
-      <div className="h-screen w-screen flex justify-center items-center bg-black">
-        <LoadingDots color="white" />
-      </div>
-    );
-  }
-  const ogUrl = `https://mongodb.vercel.app/${user.username}`;
-  const meta = {
-    title: `${user.name}'s Profile | MongoDB Starter Kit`,
-    description:
-      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: `https://api.microlink.io/?url=${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
-    ogUrl
-  };
-
-  return (
-    <Layout
-      meta={meta}
-      results={results}
-      totalUsers={totalUsers}
-      username={user.username}
-    >
-      <Profile user={user} />
-    </Layout>
-  );
-}
+import { getUser, getAllUsers, UserProps, getUserCount } from '@/lib/api/user';
+export { default } from '.';
 
 interface Params extends ParsedUrlQuery {
   username: string;
@@ -72,10 +27,21 @@ export const getStaticPaths = async () => {
   }
 };
 
+import connectToMongo from '@/lib/mongodb';
+
 export const getStaticProps: GetStaticProps = async (context) => {
+  // You should remove this try-catch block once your MongoDB Cluster is fully provisioned
+  try {
+    await connectToMongo();
+  } catch (e) {
+    return {
+      props: {
+        clusterStillProvisioning: true
+      }
+    };
+  }
+
   const { username } = context.params as Params;
-  const results = await getAllUsers();
-  const totalUsers = await getUserCount();
   const user = await getUser(username);
   if (!user) {
     return {
@@ -84,9 +50,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
+  const results = await getAllUsers();
+  const totalUsers = await getUserCount();
+
+  const ogUrl = `https://mongodb.vercel.app/${user.username}`;
+  const meta = {
+    ...defaultMetaProps,
+    title: `${user.name}'s Profile | MongoDB Starter Kit`,
+    ogImage: `https://api.microlink.io/?url=${ogUrl}&screenshot=true&meta=false&embed=screenshot.url`,
+    ogUrl: `https://mongodb.vercel.app/${user.username}`
+  };
+
   return {
     props: {
-      key: username,
+      meta,
       results,
       totalUsers,
       user
