@@ -3,29 +3,43 @@ import Sidebar from './sidebar';
 import Navbar from './navbar';
 import Directory from './directory';
 import { ResultProps } from '@/lib/api/user';
-import Meta, { MetaProps } from './meta';
 import Toast from '@/components/layout/toast';
+import Meta, { MetaProps } from '@/components/layout/meta';
+import { useRouter } from 'next/router';
+import { LoadingDots } from '@/components/icons';
+import ClusterProvisioning from '@/components/layout/cluster-provisioning';
 
 export default function Layout({
+  meta,
   results,
   totalUsers,
   username,
+  clusterStillProvisioning,
   children
 }: {
+  meta: MetaProps;
   results: ResultProps[];
   totalUsers: number;
   username?: string;
+  clusterStillProvisioning?: boolean;
   children: ReactNode;
 }) {
+  const router = useRouter();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const ogUrl = 'https://mongodb.vercel.app';
-  const meta = {
-    title: 'MongoDB Starter Kit',
-    description:
-      'MongoDB Starter Kit built with Next.js, Vercel, and MongoDB Atlas.',
-    ogImage: `https://assets.vercel.com/image/upload/v1654626375/twitter-cards/mongo-integration-starter.png`,
-    ogUrl
-  };
+
+  if (router.isFallback) {
+    return (
+      <div className="h-screen w-screen flex justify-center items-center bg-black">
+        <LoadingDots color="white" />
+      </div>
+    );
+  }
+
+  // You should remove this once your MongoDB Cluster is fully provisioned
+  if (clusterStillProvisioning) {
+    return <ClusterProvisioning />;
+  }
 
   return (
     <div className="w-full mx-auto h-screen flex overflow-hidden bg-black">

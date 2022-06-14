@@ -1,52 +1,41 @@
 import { GetStaticProps } from 'next';
-import Layout from '@/components/layout';
 import Profile from '@/components/profile';
 import {
   getAllUsers,
-  ResultProps,
   UserProps,
   getUserCount,
   getFirstUser
 } from '@/lib/api/user';
-import ClusterProvisioning from '@/components/layout/cluster-provisioning';
+import { defaultMetaProps } from '@/components/layout/meta';
+import connectToMongo from '@/lib/mongodb';
 
-export default function Home({
-  user,
-  isClusterReady
-}: {
-  user: UserProps;
-  isClusterReady: boolean;
-}) {
-  if (!isClusterReady) {
-    return <ClusterProvisioning />;
-  }
+export default function Home({ user }: { user: UserProps }) {
   return <Profile user={user} settings={false} />;
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+  // You should remove this try-catch block once your MongoDB Cluster is fully provisioned
   try {
-    const results = await getAllUsers();
-    const totalUsers = await getUserCount();
-    const firstUser = await getFirstUser();
-
-    return {
-      props: {
-        results,
-        totalUsers,
-        user: firstUser,
-        isClusterReady: true
-      },
-      revalidate: 60
-    };
+    await connectToMongo();
   } catch (e) {
     return {
       props: {
-        results: [],
-        totalUsers: 0,
-        user: {},
-        isClusterReady: false
-      },
-      revalidate: 60
+        clusterStillProvisioning: true
+      }
     };
   }
+
+  const results = await getAllUsers();
+  const totalUsers = await getUserCount();
+  const firstUser = await getFirstUser();
+
+  return {
+    props: {
+      meta: defaultMetaProps,
+      results,
+      totalUsers,
+      user: firstUser
+    },
+    revalidate: 10
+  };
 };
