@@ -17,9 +17,12 @@ export default function Directory({
 }) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
-  const { data: searchedUsers, isValidating } = useSWR<UserProps[] | null>(
+  const { data: searchedUsers } = useSWR<UserProps[] | null>(
     debouncedQuery.length > 0 && `api/user?query=${debouncedQuery}`,
-    fetcher
+    fetcher,
+    {
+      keepPreviousData: true
+    }
   );
 
   return (
@@ -64,7 +67,7 @@ export default function Directory({
         className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden"
         aria-label="Directory"
       >
-        {!searchedUsers && !isValidating ? ( // if searchedUsers is null (and SWR is done validating), show the prefetched results from getStaticProps
+        {debouncedQuery.length === 0 ? (
           results.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">
               <div className="bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
@@ -73,7 +76,7 @@ export default function Directory({
               <DirectoryResults users={users} />
             </div>
           ))
-        ) : searchedUsers && searchedUsers.length > 0 ? ( // else if there are searchedResults, show them instead of the prefetched results (without the letter headings)
+        ) : searchedUsers && searchedUsers.length > 0 ? (
           <DirectoryResults users={searchedUsers} />
         ) : (
           <div className="px-6 py-6">

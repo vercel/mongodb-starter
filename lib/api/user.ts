@@ -117,7 +117,6 @@ export async function getAllUsers(): Promise<ResultProps[]> {
 
 export async function searchUser(query: string): Promise<UserProps[]> {
   const client = await connectToMongo();
-  console.log(query);
   const collection = client.db('test').collection('users');
   return await collection
     .aggregate([
@@ -144,7 +143,7 @@ export async function searchUser(query: string): Promise<UserProps[]> {
               }
             }
           }
-          
+
           */
           text: {
             query: query,
