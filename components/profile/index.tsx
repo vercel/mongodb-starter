@@ -36,14 +36,14 @@ export default function Profile({
     bioMdx: user.bioMdx
   });
 
-  useEffect(() => {
+  if (data.username !== user.username) {
     setData({
       ...data,
+      username: user.username,
       bio: user.bio || '',
       bioMdx: user.bioMdx
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.username]);
+  }
 
   const [error, setError] = useState('');
   const settingsPage =
