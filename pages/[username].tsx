@@ -1,8 +1,9 @@
 import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
 import { defaultMetaProps } from '@/components/layout/meta';
-import { getUser, getAllUsers, UserProps, getUserCount } from '@/lib/api/user';
+import { getUser, getAllUsers, getUserCount } from '@/lib/api/user';
 export { default } from '.';
+import clientPromise from '@/lib/mongodb';
 
 interface Params extends ParsedUrlQuery {
   username: string;
@@ -26,12 +27,10 @@ export const getStaticPaths = async () => {
   }
 };
 
-import connectToMongo from '@/lib/mongodb';
-
 export const getStaticProps: GetStaticProps = async (context) => {
   // You should remove this try-catch block once your MongoDB Cluster is fully provisioned
   try {
-    await connectToMongo();
+    await clientPromise;
   } catch (e: any) {
     if (e.code === 'ENOTFOUND') {
       // cluster is still provisioning
