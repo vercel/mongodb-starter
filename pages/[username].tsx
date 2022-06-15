@@ -10,21 +10,25 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticPaths = async () => {
+  // You should remove this try-catch block once your MongoDB Cluster is fully provisioned
   try {
-    const results = await getAllUsers();
-    const paths = results.flatMap(({ users }) =>
-      users.map((user) => ({ params: { username: user.username } }))
-    );
-    return {
-      paths,
-      fallback: true
-    };
-  } catch (e) {
+    await clientPromise;
+  } catch (e: any) {
+    // cluster is still provisioning
     return {
       paths: [],
       fallback: true
     };
   }
+
+  const results = await getAllUsers();
+  const paths = results.flatMap(({ users }) =>
+    users.map((user) => ({ params: { username: user.username } }))
+  );
+  return {
+    paths,
+    fallback: true
+  };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
