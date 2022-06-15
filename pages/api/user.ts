@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getAllUsers, updateUser } from 'lib/api/user';
+import { searchUser, updateUser } from 'lib/api/user';
 import { getSession } from 'next-auth/react';
 import { getMdxSource } from 'lib/api/user';
 
@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
-      const result = await getAllUsers(req.query.query as string);
+      const result = await searchUser(req.query.query as string);
       return res.status(200).json(result);
     } catch (e: any) {
       console.log(e);

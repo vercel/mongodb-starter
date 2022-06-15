@@ -73,51 +73,11 @@ export async function getFirstUser(): Promise<UserProps | null> {
   };
 }
 
-export async function getAllUsers(search?: string): Promise<ResultProps[]> {
+export async function getAllUsers(): Promise<ResultProps[]> {
   const client = await connectToMongo();
   const collection = client.db('test').collection('users');
   return await collection
     .aggregate([
-      ...(search && search.length > 0
-        ? [
-            {
-              $search: {
-                index: 'users-index',
-                compound: {
-                  should: [
-                    {
-                      autocomplete: {
-                        query: search,
-                        path: 'name',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
-                      }
-                    },
-                    {
-                      autocomplete: {
-                        query: search,
-                        path: 'username',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
-                      }
-                    },
-                    {
-                      autocomplete: {
-                        query: search,
-                        path: 'email',
-                        fuzzy: {
-                          maxExpansions: 100
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ]
-        : []),
       {
         //sort by follower count
         $sort: {
@@ -125,7 +85,7 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
         }
       },
       {
-        $limit: 50
+        $limit: 100
       },
       {
         $group: {
@@ -149,6 +109,86 @@ export async function getAllUsers(search?: string): Promise<ResultProps[]> {
         //sort alphabetically
         $sort: {
           _id: 1
+        }
+      }
+    ])
+    .toArray();
+}
+
+export async function searchUser(query: string): Promise<UserProps[]> {
+  const client = await connectToMongo();
+  console.log(query);
+  const collection = client.db('test').collection('users');
+  return await collection
+    .aggregate([
+      {
+        $search: {
+          index: 'name-index',
+          /* 
+          name-index is a search index as follows:
+
+          {
+            "mappings": {
+              "fields": {
+                "followers": {
+                  "type": "number"
+                },
+                "name": {
+                  "analyzer": "lucene.whitespace",
+                  "searchAnalyzer": "lucene.whitespace",
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+          
+          */
+          text: {
+            query: query,
+            path: {
+              wildcard: '*' // match on both name and username
+            },
+            fuzzy: {},
+            score: {
+              // search ranking algorithm: multiply relevance score by the log1p of follower count
+              function: {
+                multiply: [
+                  {
+                    score: 'relevance'
+                  },
+                  {
+                    log1p: {
+                      path: {
+                        value: 'followers'
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        // filter out users that are not verified
+        $match: {
+          verified: true
+        }
+      },
+      // limit to 10 results
+      {
+        $limit: 10
+      },
+      {
+        $project: {
+          _id: 0,
+          emailVerified: 0,
+          score: {
+            $meta: 'searchScore'
+          }
         }
       }
     ])

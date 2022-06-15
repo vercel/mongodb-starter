@@ -1,12 +1,12 @@
-import { ResultProps } from '@/lib/api/user';
+import { ResultProps, UserProps } from '@/lib/api/user';
 import Link from 'next/link';
 import Image from 'next/image';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
 import { useDebounce } from '@/lib/hooks/use-debounce';
 import { useState } from 'react';
-import { CheckInCircleIcon } from '@/components/icons';
 import { DirectoryIcon, SearchIcon } from '@/components/icons';
+import DirectoryResults from './directory-results';
 
 export default function Directory({
   results,
@@ -17,13 +17,9 @@ export default function Directory({
 }) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 200);
-  const { data } = useSWR<ResultProps[]>(
-    `api/user?query=${debouncedQuery}`,
-    fetcher,
-    {
-      fallbackData: results,
-      keepPreviousData: true
-    }
+  const { data: searchedUsers, isValidating } = useSWR<UserProps[] | null>(
+    debouncedQuery.length > 0 && `api/user?query=${debouncedQuery}`,
+    fetcher
   );
 
   return (
@@ -68,54 +64,17 @@ export default function Directory({
         className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden"
         aria-label="Directory"
       >
-        {data && data.length > 0 ? (
-          data.map(({ _id: letter, users }) => (
+        {!searchedUsers && !isValidating ? ( // if searchedUsers is null (and SWR is done validating), show the prefetched results from getStaticProps
+          results.map(({ _id: letter, users }) => (
             <div key={letter} className="relative">
               <div className="bg-dark-accent-1 px-6 py-1 text-sm font-bold text-white uppercase">
                 <h3>{letter}</h3>
               </div>
-              <ul role="list" className="relative z-0 directory-divide-y">
-                {users.map((user) => (
-                  <li key={user.username}>
-                    <Link href={`/${user.username}`}>
-                      <a>
-                        <div className="relative px-6 py-4 flex items-center space-x-3 focus-within:ring-0">
-                          <div className="flex-shrink-0 h-12 w-12 rounded-full overflow-hidden">
-                            <Image
-                              src={user.image}
-                              alt={user.name}
-                              width={300}
-                              height={300}
-                              placeholder="blur"
-                              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2PYsGHDfwAHNAMQumvbogAAAABJRU5ErkJggg=="
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            {/* Extend touch target to entire panel */}
-                            <span
-                              className="absolute inset-0"
-                              aria-hidden="true"
-                            />
-                            <div className="flex items-center space-x-1">
-                              <p className="text-sm font-medium text-white truncate">
-                                {user.name}
-                              </p>
-                              {user.verified && (
-                                <CheckInCircleIcon className="w-4 h-4 text-white" />
-                              )}
-                            </div>
-                            <p className="text-sm text-dark-accent-5 truncate">
-                              @{user.username}
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <DirectoryResults users={users} />
             </div>
           ))
+        ) : searchedUsers && searchedUsers.length > 0 ? ( // else if there are searchedResults, show them instead of the prefetched results (without the letter headings)
+          <DirectoryResults users={searchedUsers} />
         ) : (
           <div className="px-6 py-6">
             <p className="text-center text-gray-500">No results found</p>
