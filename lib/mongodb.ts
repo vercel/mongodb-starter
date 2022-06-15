@@ -1,25 +1,43 @@
 import { MongoClient } from 'mongodb';
 
-const databaseUrl = process.env.MONGODB_URI as string;
-const options = {};
+const MONGODB_URI = process.env.MONGODB_URI as string;
 
-let client;
+if (!MONGODB_URI) {
+  throw new Error(
+    'Please define the MONGODB_URI environment variable inside .env.local'
+  );
+}
 
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
+ */
 declare global {
-  var _connection: Promise<any>;
+  var mongo: any;
+}
+let cached = global.mongo;
+
+if (!cached) {
+  cached = global.mongo = { conn: null, promise: null };
 }
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Please add your Atlas database URL to .env or .env.local');
-}
-
-const connectToMongo = () => {
-  if (!global._connection) {
-    client = new MongoClient(databaseUrl, options);
-    global._connection = client.connect();
+export default async function connectToMongo() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  return global._connection;
-};
+  if (!cached.promise) {
+    const opts = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    };
 
-export default connectToMongo;
+    // @ts-expect-error
+    cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
+      return client;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
