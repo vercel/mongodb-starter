@@ -202,7 +202,7 @@ export default function Profile({
                 });
               }}
               className="mt-1 w-full max-w-2xl px-0 text-sm tracking-wider leading-6 text-white bg-black font-mono border-0 border-b border-gray-800 focus:border-white resize-none focus:outline-none focus:ring-0"
-              placeholder="No description provided."
+              placeholder="Enter a short bio about yourself... (Markdown supported)"
               value={data.bio}
             />
             <div className="flex justify-end w-full max-w-2xl">
