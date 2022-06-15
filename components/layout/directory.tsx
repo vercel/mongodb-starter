@@ -1,6 +1,5 @@
 import { ResultProps, UserProps } from '@/lib/api/user';
 import Link from 'next/link';
-import Image from 'next/image';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
 import { useDebounce } from '@/lib/hooks/use-debounce';

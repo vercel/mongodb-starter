@@ -1,7 +1,6 @@
 import { ParsedUrlQuery } from 'querystring';
 import { GetStaticProps } from 'next';
 import { defaultMetaProps } from '@/components/layout/meta';
-import Profile from '@/components/profile';
 import { getUser, getAllUsers, UserProps, getUserCount } from '@/lib/api/user';
 export { default } from '.';
 

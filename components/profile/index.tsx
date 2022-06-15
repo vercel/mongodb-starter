@@ -26,6 +26,7 @@ export default function Profile({
   settings?: boolean;
   user: UserProps;
 }) {
+  const router = useRouter();
   const { data: session } = useSession();
   const [saving, setSaving] = useState(false);
   const [data, setData] = useState({
@@ -34,14 +35,24 @@ export default function Profile({
     bio: user.bio || '',
     bioMdx: user.bioMdx
   });
+
+  useEffect(() => {
+    setData({
+      ...data,
+      bio: user.bio || '',
+      bioMdx: user.bioMdx
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.username]);
+
   const [error, setError] = useState('');
-  const router = useRouter();
   const settingsPage =
     settings ||
     (router.query.settings === 'true' && router.asPath === '/settings');
 
   const handleDismiss = useCallback(() => {
     if (settingsPage) router.replace(`/${user.username}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const handleSave = async () => {
@@ -73,6 +84,7 @@ export default function Profile({
     setSaving(false);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onKeyDown = async (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       handleDismiss();
