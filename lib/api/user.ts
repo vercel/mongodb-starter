@@ -200,8 +200,8 @@ export async function getUserCount(): Promise<number> {
   return await collection.countDocuments();
 }
 
-export async function updateUser(username: string, image: string, bio: string) {
+export async function updateUser(username: string, bio: string) {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
-  return await collection.updateOne({ username }, { $set: { image, bio } });
+  return await collection.updateOne({ username }, { $set: { bio } });
 }

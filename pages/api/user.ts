@@ -18,7 +18,7 @@ export default async function handler(
       });
     }
   } else if (req.method === 'PUT') {
-    const { username, image, bio } = req.body;
+    const { username, bio } = req.body;
     const session = await getSession({ req });
     if (!session || session.username !== username) {
       return res.status(401).json({
@@ -26,7 +26,7 @@ export default async function handler(
       });
     }
     try {
-      const result = await updateUser(username, image, bio);
+      const result = await updateUser(username, bio);
       if (result) {
         await res.unstable_revalidate(`/${username}`);
       }

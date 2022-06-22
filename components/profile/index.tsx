@@ -37,12 +37,7 @@ export default function Profile({
   });
 
   if (data.username !== user.username) {
-    setData({
-      ...data,
-      username: user.username,
-      bio: user.bio || '',
-      bioMdx: user.bioMdx
-    });
+    setData(user);
   }
 
   const [error, setError] = useState('');
