@@ -23,7 +23,7 @@ Here are the steps:
 7. Generate a new client secret and copy that too.
 8. Once your application is deployed, edit the homepage & callback URLs to match your deployment URL.
 
-> Note: Due to a bug, when deploying this application to Vercel, you'll need to go into your Vercel project's env vars page (https://vercel.com/<USERNAME/TEAM_SLUG>/<PROJECT_SLUG>/settings/environment-variables) and edit the MONGODB_URI string to replace the `/admin` part of the URL with `?retryWrites=true&w=majority`. We will fix this soon.
+> Note: Due to a bug, when deploying this application to Vercel, you'll need to go into your Vercel project's env vars page (`https://vercel.com/<USERNAME/TEAM_SLUG>/<PROJECT_SLUG>/settings/environment-variables`) and edit the `MONGODB_URI` string to replace the `/admin` part of the URL with `?retryWrites=true&w=majority`. We will fix this soon.
 
 ### Demo
 
