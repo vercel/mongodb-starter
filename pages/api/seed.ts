@@ -9,7 +9,7 @@ async function handler(_req: NextApiRequest, res: NextApiResponse) {
       error: { message }
     });
   } else {
-    await res.unstable_revalidate(`/`);
+    await res.revalidate(`/`);
     res.status(200).send('ok.');
   }
 }
