@@ -28,7 +28,7 @@ export default async function handler(
     try {
       const result = await updateUser(username, bio);
       if (result) {
-        await res.unstable_revalidate(`/${username}`);
+        await res.revalidate(`/${username}`);
       }
       const bioMdx = await getMdxSource(bio); // return bioMdx to optimistically show updated state
       return res.status(200).json(bioMdx);
