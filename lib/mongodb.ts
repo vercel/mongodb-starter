@@ -4,10 +4,10 @@ const uri = process.env.MONGODB_URI as string; // your mongodb connection string
 const options = {};
 
 let client;
-let clientPromise: Promise<any>;
+let clientPromise: Promise<MongoClient>;
 
 declare global {
-  var _mongoClientPromise: Promise<any>;
+  var _mongoClientPromise: Promise<MongoClient>;
 }
 
 if (!process.env.MONGODB_URI) {
