@@ -67,6 +67,11 @@ export async function getFirstUser(): Promise<UserProps | null> {
       projection: { _id: 0, emailVerified: 0 }
     }
   );
+
+  if (!results) {
+    throw new Error('Please run "npm run setup" to insert testing records');
+  }
+
   return {
     ...results,
     bioMdx: await getMdxSource(results.bio || placeholderBio)
@@ -123,7 +128,7 @@ export async function searchUser(query: string): Promise<UserProps[]> {
       {
         $search: {
           index: 'name-index',
-          /* 
+          /*
           name-index is a search index as follows:
 
           {
