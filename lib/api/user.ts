@@ -49,6 +49,7 @@ export async function getUser(username: string): Promise<UserProps | null> {
     { projection: { _id: 0, emailVerified: 0 } }
   );
   if (results) {
+    // @ts-ignore
     return {
       ...results,
       bioMdx: await getMdxSource(results.bio || placeholderBio)
@@ -67,15 +68,17 @@ export async function getFirstUser(): Promise<UserProps | null> {
       projection: { _id: 0, emailVerified: 0 }
     }
   );
+  // @ts-ignore
   return {
     ...results,
-    bioMdx: await getMdxSource(results.bio || placeholderBio)
+    bioMdx: await getMdxSource(results?.bio || placeholderBio)
   };
 }
 
 export async function getAllUsers(): Promise<ResultProps[]> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
+  // @ts-ignore
   return await collection
     .aggregate([
       {
@@ -118,6 +121,7 @@ export async function getAllUsers(): Promise<ResultProps[]> {
 export async function searchUser(query: string): Promise<UserProps[]> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
+  // @ts-ignore
   return await collection
     .aggregate([
       {
