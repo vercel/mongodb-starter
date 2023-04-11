@@ -44,7 +44,7 @@ Et vivamus lorem pulvinar nascetur non. Pulvinar a sed platea rhoncus ac mauris 
 export async function getUser(username: string): Promise<UserProps | null> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
-  const results = await collection.findOne(
+  const results = await collection.findOne<UserProps>(
     { username },
     { projection: { _id: 0, emailVerified: 0 } }
   );
@@ -61,23 +61,27 @@ export async function getUser(username: string): Promise<UserProps | null> {
 export async function getFirstUser(): Promise<UserProps | null> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
-  const results = await collection.findOne(
+  const results = await collection.findOne<UserProps>(
     {},
     {
       projection: { _id: 0, emailVerified: 0 }
     }
   );
-  return {
-    ...results,
-    bioMdx: await getMdxSource(results.bio || placeholderBio)
-  };
+  if (results) {
+    return {
+      ...results,
+      bioMdx: await getMdxSource(results.bio || placeholderBio)
+    };
+  } else {
+    return null;
+  }
 }
 
 export async function getAllUsers(): Promise<ResultProps[]> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
   return await collection
-    .aggregate([
+    .aggregate<ResultProps>([
       {
         //sort by follower count
         $sort: {
@@ -119,7 +123,7 @@ export async function searchUser(query: string): Promise<UserProps[]> {
   const client = await clientPromise;
   const collection = client.db('test').collection('users');
   return await collection
-    .aggregate([
+    .aggregate<UserProps>([
       {
         $search: {
           index: 'name-index',
