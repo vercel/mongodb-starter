@@ -12,15 +12,12 @@ class Singleton {
   private client: MongoClient;
   private clientPromise: Promise<MongoClient>;
   private constructor() {
+    this.client = new MongoClient(uri, options);
+    this.clientPromise = this.client.connect();
     if (process.env.NODE_ENV === 'development') {
       // In development mode, use a global variable so that the value
       // is preserved across module reloads caused by HMR (Hot Module Replacement).
-      this.client = new MongoClient(uri, options);
-      this.clientPromise = global._mongoClientPromise = this.client.connect();
-    } else {
-      // In production mode, it's best to not use a global variable.
-      this.client = new MongoClient(uri, options);
-      this.clientPromise = this.client.connect();
+      global._mongoClientPromise = this.clientPromise;
     }
   }
 
