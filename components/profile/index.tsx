@@ -230,24 +230,29 @@ export default function Profile({
               <CheckIcon className="h-4 w-4 text-white" />
             )}
           </button>
-          <Link href={`/${user.username}`} shallow replace scroll={false}>
-            <a className="rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-              <XIcon className="h-4 w-4 text-white" />
-            </a>
+          <Link
+            href={`/${user.username}`}
+            shallow
+            replace
+            scroll={false}
+            className="rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+
+            <XIcon className="h-4 w-4 text-white" />
+
           </Link>
         </div>
       ) : session?.username === user.username ? (
-        <Link
+        (<Link
           href={{ query: { settings: true } }}
           as="/settings"
           shallow
           replace
           scroll={false}
-        >
-          <a className="fixed bottom-10 right-10 rounded-full border bg-black border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-            <EditIcon className="h-4 w-4 text-white" />
-          </a>
-        </Link>
+          className="fixed bottom-10 right-10 rounded-full border bg-black border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+
+          <EditIcon className="h-4 w-4 text-white" />
+
+        </Link>)
       ) : null}
     </div>
   );
